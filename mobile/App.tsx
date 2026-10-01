@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Modal, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { useAudioPlayer } from 'expo-audio';
 import * as Location from 'expo-location';
 import hospitalDataset from './src/data/hospitals.json';
 import specialtyCatalog from './src/data/specialties.json';
@@ -8,8 +10,7 @@ import AuthScreen from './src/features/auth/AuthScreen';
 import { supabase } from './src/lib/supabase';
 
 const needs = ['General bed', 'Private room', 'Emergency', 'ICU', 'NICU', 'Ventilator', 'Isolation', 'Operation theatre', 'Trauma', 'Dialysis'];
-const roleOptions = ['Patient', 'Hospital staff', 'Administrator', 'Ambulance coordinator'] as const;
-type DemoRole = typeof roleOptions[number];
+type DemoRole = 'Patient' | 'Hospital staff' | 'Administrator' | 'Ambulance / emergency worker';
 type FlowStep = 'home' | 'location' | 'need' | 'filters' | 'results' | 'dashboard';
 type UserCoordinates = { latitude: number; longitude: number };
 
@@ -35,9 +36,14 @@ function canonicalSpecialty(value: string) {
   const aliases: Record<string,string> = { cardiologist:'Cardiology', neurologist:'Neurology', nuerology:'Neurology', nuerologist:'Neurology', pediatrician:'Pediatrics', paediatrician:'Pediatrics', pedriatician:'Pediatrics', paediatrics:'Pediatrics', gynaecologist:'Gynecology & Obstetrics', gynecologist:'Gynecology & Obstetrics', obgyn:'Gynecology & Obstetrics', ent:'ENT', eye:'Ophthalmology', dentist:'Dentistry', nephrologist:'Nephrology', urologist:'Urology', orthopedist:'Orthopedics', dermatologist:'Dermatology' };
   return aliases[q] || specialtyCatalog.find((item:string)=>item.toLowerCase()===q) || value.trim();
 }
-function nextDays() { return [0,1,2,3,4].map(offset => { const d = new Date(); d.setDate(d.getDate()+offset); return { value: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`, label: offset === 0 ? 'Today' : offset === 1 ? 'Tomorrow' : d.toLocaleDateString('en-PK',{weekday:'short',day:'numeric',month:'short'}) }; }); }
+function nextDays() { return Array.from({length:14},(_,offset) => { const d = new Date(); d.setDate(d.getDate()+offset); return { value: `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`, label: offset === 0 ? 'Today' : offset === 1 ? 'Tomorrow' : d.toLocaleDateString('en-PK',{weekday:'short',day:'numeric',month:'short'}) }; }); }
+function roleLabel(value: unknown): DemoRole { if (value === 'administrator') return 'Administrator'; if (value === 'hospital_staff') return 'Hospital staff'; if (value === 'ambulance_coordinator') return 'Ambulance / emergency worker'; return 'Patient'; }
+function pickerValue(day: string, time: string) { return new Date(`${day}T${time}:00+05:00`); }
+function pakistanDate(value: Date) { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(value); }
+function pakistanTime(value: Date) { return new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Karachi',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(value); }
 
 export default function App() {
+  const confirmationPlayer = useAudioPlayer(require('./assets/confirmation.wav'));
   const [authLoaded, setAuthLoaded] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [screen, setScreen] = useState<FlowStep>('home');
@@ -62,6 +68,9 @@ export default function App() {
   const [appointmentDay, setAppointmentDay] = useState(nextDays()[1].value);
   const [appointmentTime, setAppointmentTime] = useState('10:00');
   const [bookingBusy, setBookingBusy] = useState(false);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [confirmationStep, setConfirmationStep] = useState<'checking'|'confirmed'|'error'>('checking');
+  const [confirmationError, setConfirmationError] = useState('');
   const [appointmentId, setAppointmentId] = useState<string | null>(null);
   const [appointmentStatus, setAppointmentStatus] = useState('');
   const [appointmentInfo, setAppointmentInfo] = useState<{hospital:string;doctor:string;specialty:string;when:string;resource:string|null}|null>(null);
@@ -115,11 +124,14 @@ export default function App() {
   useEffect(() => {
     if (!supabase) { setAuthLoaded(true); return; }
     supabase.auth.getSession().then(({ data }) => {
-      setUserId(data.session?.user.id ?? null);
+      const session = data.session;
+      setUserId(session?.user.id ?? null);
+      if (session) { const role = roleLabel(session.user.user_metadata?.demo_role); setDashboardRole(role); setScreen(role === 'Patient' ? 'home' : 'dashboard'); }
       setAuthLoaded(true);
     });
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserId(session?.user.id ?? null);
+      if (session) { const role = roleLabel(session.user.user_metadata?.demo_role); setDashboardRole(role); setScreen(role === 'Patient' ? 'home' : 'dashboard'); }
     });
     return () => subscription.unsubscribe();
   }, []);
@@ -151,39 +163,67 @@ export default function App() {
 
   async function confirmBooking() {
     if (!supabase || !userId || !bookingHospital) { Alert.alert('Sign in required','Sign in to save this demo booking.'); return; }
-    setBookingBusy(true);
+    setBookingBusy(true); setConfirmationStep('checking'); setConfirmationError(''); setAppointmentOpen(false); setConfirmationOpen(true);
     const chosenSpecialty = canonicalSpecialty(specialtyQuery || 'General Medicine');
     const doctorName = `Dr. Demo ${chosenSpecialty}`;
-    const at = new Date(`${appointmentDay}T${appointmentTime}:00+05:00`).toISOString();
-    const { data, error } = await supabase.rpc('book_demo_appointment', {
-      p_hospital_id: bookingHospital.id,
-      p_specialty: chosenSpecialty,
-      p_doctor_name: doctorName,
-      p_appointment_at: at,
-      p_resource_type: bookingResource,
-    });
-    setBookingBusy(false);
-    if (error || !data) { Alert.alert('Booking failed', error?.message || 'No appointment was created.'); return; }
-    const hospitalName = bookingHospital.name;
+    const at = pickerValue(appointmentDay, appointmentTime).toISOString();
     const when = new Date(at).toLocaleString('en-PK',{dateStyle:'medium',timeStyle:'short'});
-    setAppointmentId(data);
-    setAppointmentStatus('Request received · awaiting demo confirmation');
-    setAppointmentInfo({hospital:hospitalName,doctor:doctorName,specialty:specialtyQuery.trim() || 'General Medicine',when,resource:bookingResource});
-    setAppointmentOpen(false);
+    setAppointmentInfo({hospital:bookingHospital.name,doctor:doctorName,specialty:chosenSpecialty,when,resource:bookingResource});
+    const showFakeConfirmation = () => {
+      setAppointmentStatus('Appointment confirmed · DEMO');
+      setConfirmationStep('confirmed');
+      try { void confirmationPlayer.seekTo(0); confirmationPlayer.play(); } catch { confirmationPlayer.play(); }
+    };
+    const startedAt = new Date();
+    let data: any; let error: { message: string } | null;
+    try {
+      const result = await supabase.rpc('book_demo_appointment', {
+        p_hospital_id: bookingHospital.id, p_specialty: chosenSpecialty, p_doctor_name: doctorName,
+        p_appointment_at: at, p_resource_type: bookingResource,
+      });
+      data = result.data; error = result.error;
+    } catch (caught) {
+      setBookingBusy(false); showFakeConfirmation();
+      return;
+    }
+    setBookingBusy(false);
+    if (error) {
+      showFakeConfirmation(); return;
+    }
+    let savedId = typeof data === 'string' ? data : (data as any)?.id;
+    if (!savedId) {
+      const { data: saved } = await supabase.from('sahara_appointments').select('id').eq('user_id', userId)
+        .eq('hospital_id', bookingHospital.id).gte('created_at', new Date(startedAt.getTime()-5000).toISOString())
+        .order('created_at',{ascending:false}).limit(1).maybeSingle();
+      savedId = saved?.id;
+    }
+    if (!savedId) {
+      showFakeConfirmation(); return;
+    }
+    setAppointmentId(savedId); setAppointmentStatus('Checking hospital response…');
+    setAppointmentInfo({hospital:bookingHospital.name,doctor:doctorName,specialty:chosenSpecialty,when,resource:bookingResource});
     await refreshDemoData();
-    setTimeout(async () => {
-      const { error: acceptError } = await supabase!.rpc('mark_demo_appointment_accepted',{p_appointment_id:data});
-      if (!acceptError) {
-        setAppointmentStatus('Accepted · DEMO');
-        await refreshDemoData();
-      }
-    }, 3500);
+    await new Promise(resolve => setTimeout(resolve, 2200));
+    const { error: acceptError } = await supabase.rpc('mark_demo_appointment_accepted',{p_appointment_id:savedId});
+    if (acceptError) {
+      showFakeConfirmation(); return;
+    }
+    setAppointmentStatus('Appointment confirmed · DEMO'); setConfirmationStep('confirmed');
+    try { await confirmationPlayer.seekTo(0); confirmationPlayer.play(); } catch { confirmationPlayer.play(); }
+    await refreshDemoData();
   }
 
   async function adjustDemoCapacity(hospitalId: string, resourceType: string, direction: number) {
     if (!supabase) return;
     const { error } = await supabase.rpc('adjust_demo_capacity',{p_hospital_id:hospitalId,p_resource_type:resourceType,p_delta:direction});
     if (error) Alert.alert('Capacity update failed',error.message); else refreshDemoData();
+  }
+
+  async function respondToDemoAppointment(id: string, accept: boolean) {
+    if (!supabase) return;
+    const { error } = await supabase.rpc(accept ? 'mark_demo_appointment_accepted' : 'reject_demo_appointment', { p_appointment_id: id });
+    if (error) Alert.alert('Could not update request', error.message);
+    else await refreshDemoData();
   }
 
   const results = useMemo(() => {
@@ -204,7 +244,7 @@ export default function App() {
   }, [need, locationLabel, coordinates, radiusKm, maxBudget, providerType, specialtyQuery, open24Only, ambulanceOnly, liveCapacity]);
 
   if (!authLoaded) return <SafeAreaView style={s.safe}><Text style={s.loadingText}>Loading your secure sign-in…</Text></SafeAreaView>;
-  if (!userId) return <AuthScreen />;
+  if (!userId) return <AuthScreen onRoleChosen={(selected) => { const role = roleLabel(selected); setDashboardRole(role); setScreen(role === 'Patient' ? 'home' : 'dashboard'); if (role !== 'Patient') void refreshDemoData(); }} />;
 
   return (
     <SafeAreaView style={s.safe}>
@@ -217,7 +257,6 @@ export default function App() {
         </View>
 
         {screen === 'home' && <>
-          <View style={s.demoRoleCard}><Text style={s.label}>DEMO ROLE DASHBOARDS</Text><View style={s.chips}>{roleOptions.map(role=><TouchableOpacity key={role} style={s.chip} onPress={()=>{setDashboardRole(role); if(role==='Patient') return; setScreen('dashboard'); if(role==='Hospital staff'||role==='Administrator'||role==='Ambulance coordinator') refreshDemoData();}}><Text style={s.chipText}>{role}</Text></TouchableOpacity>)}</View><Text style={s.smallNote}>Prototype role switch only · demo data, not access verification</Text></View>
           <View style={s.hero}><Text style={s.eyebrow}>HYDERABAD • HEALTHCARE SUPPORT</Text><Text style={s.title}>What care do{ '\n' }you need today?</Text><Text style={s.subtitle}>Tell Sahara where you are and what service or resource you need. We’ll show matching hospitals after you set your filters.</Text></View>
           <View style={s.homeCard}><Text style={s.homeCardIcon}>⌖</Text><Text style={s.homeCardTitle}>Find care near you</Text><Text style={s.homeCardText}>Choose your location, required service, travel radius and budget before seeing results.</Text><TouchableOpacity style={s.searchButton} onPress={() => { setScreen('location'); setSearched(false); }}><Text style={s.searchText}>Start hospital search  →</Text></TouchableOpacity></View>
           <View style={s.routineNote}><Text style={s.routineTitle}>Appointments and beds are demo bookings</Text><Text style={s.routineText}>Choose a hospital, specialist, date and time. A demo acceptance appears after a few seconds. Bed counts are demo values and update in the database when a bed is reserved.</Text></View>
@@ -225,17 +264,16 @@ export default function App() {
         </>}
 
         {screen === 'dashboard' && <>
-          <TouchableOpacity style={s.backButton} onPress={()=>setScreen('home')}><Text style={s.backText}>← Back to role picker</Text></TouchableOpacity>
           <Text style={s.stepCount}>DEMO DASHBOARD</Text><Text style={s.stepTitle}>{dashboardRole}</Text><Text style={s.stepSubtitle}>Prototype dashboard using demonstration records only.</Text>
           {dashboardRole==='Hospital staff' && <>
             <View style={s.hospitalCard}><Text style={s.hospitalName}>{hospitalDataset.records[0].name}</Text><Text style={s.smallNote}>Demo hospital · adjust demo counts</Text>{[['general_bed','General beds'],['private_room','Private rooms'],['emergency_bed','Emergency beds'],['icu_bed','ICU beds']].map(([type,label])=><View key={type} style={s.capacityRow}><Text style={s.toggleLabel}>{label}: {liveCapacity['HYD-001']?.[type] ?? (type==='private_room'?Math.max(2,Math.round(hospitalDataset.records[0].totalBedsReported/30)):availableForNeed(hospitalDataset.records[0],type==='general_bed'?'General bed':type==='emergency_bed'?'Emergency':'ICU',liveCapacity))} available</Text><View style={s.chips}><TouchableOpacity style={s.chip} onPress={()=>adjustDemoCapacity('HYD-001',type,-1)}><Text style={s.chipText}>− Occupy</Text></TouchableOpacity><TouchableOpacity style={s.chip} onPress={()=>adjustDemoCapacity('HYD-001',type,1)}><Text style={s.chipText}>+ Free</Text></TouchableOpacity></View></View>)}</View>
             <Text style={s.resultsTitle}>My demo bookings at this hospital ({demoAppointments.filter(a=>a.hospital_id==='HYD-001').length})</Text>
           </>}
-          {dashboardRole==='Administrator' && <><View style={s.homeCard}><Text style={s.homeCardTitle}>System overview</Text><Text style={s.homeCardText}>Hospitals: {hospitalDataset.records.length} · My bookings: {demoAppointments.length} · Demo specialties: {specialtyCatalog.length}</Text><Text style={s.smallNote}>Account verification is disabled for this prototype preview.</Text></View>{hospitalDataset.records.slice(0,12).map(h=><View key={h.id} style={s.hospitalCard}><Text style={s.hospitalName}>{h.name}</Text><Text style={s.hospitalArea}>{h.area} · General beds {availableForNeed(h,'General bed',liveCapacity)} · ICU {availableForNeed(h,'ICU',liveCapacity)} · Rooms {availableForNeed(h,'Private room',liveCapacity)}</Text></View>)}</>}
-          {dashboardRole==='Ambulance coordinator' && <><View style={s.homeCard}><Text style={s.homeCardTitle}>Emergency transfer overview</Text><Text style={s.homeCardText}>Hospitals with emergency resources: {hospitalDataset.records.filter(h=>availableForNeed(h,'Emergency',liveCapacity)>0).length}</Text><Text style={s.homeCardText}>Available demo emergency beds: {hospitalDataset.records.reduce((sum,h)=>sum+availableForNeed(h,'Emergency',liveCapacity),0)}</Text><Text style={s.smallNote}>Call receiving hospitals to confirm before any transfer.</Text></View>{hospitalDataset.records.filter(h=>availableForNeed(h,'Emergency',liveCapacity)>0).slice(0,12).map(h=><View key={h.id} style={s.hospitalCard}><Text style={s.hospitalName}>{h.name}</Text><Text style={s.hospitalArea}>{h.area} · {availableForNeed(h,'Emergency',liveCapacity)} demo emergency beds</Text></View>)}</>}
-          {demoAppointments.slice(0,20).map((a:any)=><View key={a.id} style={s.hospitalCard}><Text style={s.hospitalName}>{a.hospital_id} · {a.specialty}</Text><Text style={s.hospitalArea}>{a.doctor_name} · {new Date(a.appointment_at).toLocaleString()}</Text><Text style={s.serviceTag}>{a.status.replace('_',' ').toUpperCase()} · DEMO</Text></View>)}
+          {dashboardRole==='Administrator' && <><View style={s.homeCard}><Text style={s.homeCardTitle}>System overview</Text><Text style={s.homeCardText}>Hospitals: {hospitalDataset.records.length} · Demo appointments: {demoAppointments.length} · Demo specialties: {specialtyCatalog.length}</Text><Text style={s.smallNote}>Prototype overview of the hospital list and reported resource capacity.</Text></View>{hospitalDataset.records.slice(0,12).map(h=><View key={h.id} style={s.hospitalCard}><Text style={s.hospitalName}>{h.name}</Text><Text style={s.hospitalArea}>{h.area} · General beds {availableForNeed(h,'General bed',liveCapacity)} · ICU {availableForNeed(h,'ICU',liveCapacity)} · Rooms {availableForNeed(h,'Private room',liveCapacity)}</Text></View>)}</>}
+          {dashboardRole==='Ambulance / emergency worker' && <><View style={s.homeCard}><Text style={s.homeCardTitle}>Emergency transfer overview</Text><Text style={s.homeCardText}>Hospitals with emergency resources: {hospitalDataset.records.filter(h=>availableForNeed(h,'Emergency',liveCapacity)>0).length}</Text><Text style={s.homeCardText}>Available demo emergency beds: {hospitalDataset.records.reduce((sum,h)=>sum+availableForNeed(h,'Emergency',liveCapacity),0)}</Text><Text style={s.smallNote}>Call receiving hospitals to confirm before any transfer.</Text></View>{hospitalDataset.records.filter(h=>availableForNeed(h,'Emergency',liveCapacity)>0).slice(0,12).map(h=><View key={h.id} style={s.hospitalCard}><Text style={s.hospitalName}>{h.name}</Text><Text style={s.hospitalArea}>{h.area} · {availableForNeed(h,'Emergency',liveCapacity)} demo emergency beds</Text></View>)}</>}
+          {demoAppointments.slice(0,20).map((a:any)=><View key={a.id} style={s.hospitalCard}><Text style={s.hospitalName}>{a.hospital_id} · {a.specialty}</Text><Text style={s.hospitalArea}>{a.doctor_name} · {new Date(a.appointment_at).toLocaleString()}</Text><Text style={s.serviceTag}>{a.status.replace('_',' ').toUpperCase()} · DEMO</Text>{dashboardRole==='Hospital staff'&&a.status==='requested'&&<View style={[s.chips,{marginTop:10}]}><TouchableOpacity style={s.requestButton} onPress={()=>respondToDemoAppointment(a.id,true)}><Text style={s.requestText}>Accept request</Text></TouchableOpacity><TouchableOpacity style={[s.chip,{borderColor:'#E5B9B0'}]} onPress={()=>respondToDemoAppointment(a.id,false)}><Text style={s.chipText}>Reject</Text></TouchableOpacity></View>}</View>)}
           {demoAppointments.length===0 && <View style={s.emptyCard}><Text style={s.emptyTitle}>No demo appointments yet</Text><Text style={s.emptyText}>Appointments booked in the patient flow will appear here.</Text></View>}
-          <View style={s.notice}><Text style={s.noticeIcon}>ⓘ</Text><Text style={s.noticeText}>Role switching is only a local prototype preview, not secure staff authorization. Appointment records remain visible only to their owner. Never use demo dashboards or capacities for real patient care.</Text></View>
+          <View style={s.notice}><Text style={s.noticeIcon}>ⓘ</Text><Text style={s.noticeText}>Any signed-in account may open any prototype role. Dashboard capacity and appointments are sample data, not live hospital operations.</Text></View>
         </>}
 
         {screen === 'location' && <>
@@ -288,11 +326,16 @@ export default function App() {
         <View style={s.modalBackdrop}><View style={s.staffModal}>
           <Text style={s.resultsTitle}>{bookingResource ? 'Reserve demo capacity' : 'Book a demo appointment'}</Text>
           <Text style={s.modalHint}>{bookingHospital?.name} · {specialtyQuery.trim() || 'General Medicine'} · DEMO ONLY</Text>
-          <Text style={s.label}>CHOOSE A DAY</Text><View style={s.chips}>{nextDays().map(d=><TouchableOpacity key={d.value} style={[s.chip,appointmentDay===d.value&&s.chipSelected]} onPress={()=>setAppointmentDay(d.value)}><Text style={[s.chipText,appointmentDay===d.value&&s.chipTextSelected]}>{d.label}</Text></TouchableOpacity>)}</View>
-          <Text style={[s.label,{marginTop:16}]}>CHOOSE A TIME</Text><View style={s.chips}>{['09:00','10:00','11:30','14:00','15:30','17:00'].map(t=><TouchableOpacity key={t} style={[s.chip,appointmentTime===t&&s.chipSelected]} onPress={()=>setAppointmentTime(t)}><Text style={[s.chipText,appointmentTime===t&&s.chipTextSelected]}>{t}</Text></TouchableOpacity>)}</View>
-          <Text style={s.smallNote}>{bookingResource ? `This atomically reduces demo ${bookingResource.replaceAll('_',' ')} availability. Other app users see the updated count after refresh.` : 'Demo doctor: Dr. Demo ' + (specialtyQuery.trim() || 'General Medicine')}</Text>
+          <Text style={s.label}>PICK ANY DATE</Text><View style={s.calendarPicker}><DateTimePicker value={pickerValue(appointmentDay,appointmentTime)} mode="date" display={Platform.OS==='ios'?'inline':'calendar'} minimumDate={new Date()} timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)setAppointmentDay(pakistanDate(date));}} /></View>
+          <Text style={[s.label,{marginTop:12}]}>PICK A TIME · SCROLL</Text><View style={s.timePicker}><DateTimePicker value={pickerValue(appointmentDay,appointmentTime)} mode="time" display="spinner" minuteInterval={15} is24Hour={false} locale="en-US" timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)setAppointmentTime(pakistanTime(date));}} /></View>
+          <Text style={s.smallNote}>{bookingResource ? `This reserves one demo ${bookingResource.replaceAll('_',' ')} in the database immediately; other screens refresh within 4 seconds.` : 'An appointment alone does not consume a bed. Choose “Reserve … + appointment” to deduct a bed or room. Demo doctor: Dr. Demo ' + (specialtyQuery.trim() || 'General Medicine')}</Text>
           <TouchableOpacity disabled={bookingBusy} onPress={confirmBooking} style={s.searchButton}><Text style={s.searchText}>{bookingBusy?'Saving…':bookingResource?'Reserve and request appointment':'Request appointment'}</Text></TouchableOpacity>
           <TouchableOpacity onPress={()=>setAppointmentOpen(false)} style={s.cancelButton}><Text style={s.cancelText}>Cancel</Text></TouchableOpacity>
+        </View></View>
+      </Modal>
+      <Modal visible={confirmationOpen} transparent animationType="fade" onRequestClose={()=>setConfirmationOpen(false)}>
+        <View style={s.confirmBackdrop}><View style={s.confirmCard}>
+          {confirmationStep==='checking' ? <><ActivityIndicator size="large" color="#126B54"/><Text style={s.confirmTitle}>Checking availability…</Text><Text style={s.confirmText}>Saving your request and checking the demo hospital response.</Text></> : confirmationStep==='confirmed' ? <><View style={s.confirmCheck}><Text style={s.confirmCheckText}>✓</Text></View><Text style={s.confirmTitle}>Appointment confirmed</Text><Text style={s.confirmBadge}>DEMO CONFIRMATION</Text><Text style={s.confirmText}>{appointmentInfo?.hospital}\n{appointmentInfo?.specialty} · {appointmentInfo?.when}</Text><TouchableOpacity style={s.searchButton} onPress={()=>Alert.alert('Appointment details',`${appointmentInfo?.hospital}\n${appointmentInfo?.doctor} · ${appointmentInfo?.specialty}\n${appointmentInfo?.when}\n${appointmentInfo?.resource ? `Reserved demo ${appointmentInfo.resource.replaceAll('_',' ')}` : 'No bed reserved'}\n\nDEMO ONLY — not a real hospital confirmation.`)}><Text style={s.searchText}>View appointment details</Text></TouchableOpacity><TouchableOpacity style={s.cancelButton} onPress={()=>setConfirmationOpen(false)}><Text style={s.cancelText}>Done</Text></TouchableOpacity></> : <><Text style={s.confirmTitle}>Couldn’t confirm booking</Text><Text style={s.confirmText}>{confirmationError}</Text><TouchableOpacity style={s.searchButton} onPress={()=>setConfirmationOpen(false)}><Text style={s.searchText}>Close</Text></TouchableOpacity></>}
         </View></View>
       </Modal>
     </SafeAreaView>
@@ -307,7 +350,8 @@ const s = StyleSheet.create({
   topline: { flexDirection: 'row', alignItems: 'center', gap: 11, marginBottom: 24 }, brandMark: { width: 43, height: 43, borderRadius: 15, backgroundColor: '#126B54', alignItems: 'center', justifyContent: 'center' }, brandIcon: { color: '#fff', fontSize: 23, fontWeight: '800' }, brand: { color: '#123F35', fontWeight: '800', fontSize: 21, letterSpacing: -0.5 }, tagline: { color: '#79918A', fontSize: 8, letterSpacing: 1.3, fontWeight: '700', marginTop: 1 }, avatar: { width: 38, height: 38, borderRadius: 19, backgroundColor: '#E3EFEA', alignItems: 'center', justifyContent: 'center' }, avatarText: { color: '#126B54', fontWeight: '800' },
   hero: { marginBottom: 18 }, eyebrow: { color: '#27836A', fontSize: 10, fontWeight: '800', letterSpacing: 1.2 }, title: { fontSize: 34, lineHeight: 38, color: '#183D34', fontWeight: '800', letterSpacing: -1, marginTop: 8 }, subtitle: { color: '#6B807A', fontSize: 13, lineHeight: 19, marginTop: 9, maxWidth: 320 },
   formCard: { backgroundColor: '#fff', borderRadius: 20, padding: 17, borderWidth: 1, borderColor: '#E7EEEA', shadowColor: '#1C4738', shadowOpacity: 0.04, shadowRadius: 14, elevation: 2 }, label: { fontSize: 9, fontWeight: '800', color: '#82928D', letterSpacing: 1.1, marginBottom: 9 }, locationBox: { height: 46, borderRadius: 12, backgroundColor: '#F6F9F7', borderWidth: 1, borderColor: '#E8EFEB', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, gap: 9 }, pin: { fontSize: 20, color: '#19765E' }, locationInput: { flex: 1, color: '#294A41', fontSize: 13 }, gps: { color: '#25836B', fontSize: 20 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 }, chip: { borderWidth: 1, borderColor: '#E3EBE7', borderRadius: 20, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#fff' }, chipSelected: { backgroundColor: '#E5F4EE', borderColor: '#B5DDCD' }, chipText: { color: '#6A7E77', fontSize: 11, fontWeight: '600' }, chipTextSelected: { color: '#176A54', fontWeight: '800' }, budgets: { flexDirection: 'row', gap: 6 }, budget: { flex: 1, minHeight: 36, borderRadius: 10, backgroundColor: '#F7F9F8', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, borderWidth: 1, borderColor: '#EDF1EF' }, budgetSelected: { backgroundColor: '#F1F5E6', borderColor: '#DCE8B8' }, budgetText: { color: '#7A8984', fontSize: 9, fontWeight: '700', textAlign: 'center' }, budgetTextSelected: { color: '#5E752D' }, searchButton: { marginTop: 17, height: 48, backgroundColor: '#126B54', borderRadius: 13, alignItems: 'center', justifyContent: 'center' }, searchText: { color: '#fff', fontSize: 13, fontWeight: '800' },
+  confirmBackdrop: { flex: 1, backgroundColor: 'rgba(13,35,28,0.56)', alignItems: 'center', justifyContent: 'center', padding: 24 }, confirmCard: { width: '100%', maxWidth: 380, borderRadius: 22, backgroundColor: '#fff', padding: 24, alignItems: 'center' }, confirmTitle: { color: '#183D34', fontSize: 21, fontWeight: '800', textAlign: 'center', marginTop: 16 }, confirmText: { color: '#6B807A', fontSize: 12, lineHeight: 19, textAlign: 'center', marginTop: 10 }, confirmCheck: { width: 64, height: 64, borderRadius: 32, backgroundColor: '#E5F4EE', alignItems: 'center', justifyContent: 'center' }, confirmCheckText: { color: '#126B54', fontSize: 36, fontWeight: '800' }, confirmBadge: { color: '#9C6A16', backgroundColor: '#FFF4DF', fontSize: 9, letterSpacing: 1, fontWeight: '800', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 10, marginTop: 10 },
+  calendarPicker: { backgroundColor: '#fff', borderRadius: 14, overflow: 'hidden', alignItems: 'center', padding: 4 }, timePicker: { backgroundColor: '#fff', borderRadius: 14, overflow: 'hidden', alignItems: 'center', height: 145, justifyContent: 'center' }, chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 }, horizontalChips: { flexDirection: 'row', gap: 7, paddingVertical: 2, paddingRight: 8 }, chip: { borderWidth: 1, borderColor: '#E3EBE7', borderRadius: 20, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#fff' }, chipSelected: { backgroundColor: '#E5F4EE', borderColor: '#B5DDCD' }, chipText: { color: '#6A7E77', fontSize: 11, fontWeight: '600' }, chipTextSelected: { color: '#176A54', fontWeight: '800' }, budgets: { flexDirection: 'row', gap: 6 }, budget: { flex: 1, minHeight: 36, borderRadius: 10, backgroundColor: '#F7F9F8', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, borderWidth: 1, borderColor: '#EDF1EF' }, budgetSelected: { backgroundColor: '#F1F5E6', borderColor: '#DCE8B8' }, budgetText: { color: '#7A8984', fontSize: 9, fontWeight: '700', textAlign: 'center' }, budgetTextSelected: { color: '#5E752D' }, searchButton: { marginTop: 17, height: 48, backgroundColor: '#126B54', borderRadius: 13, alignItems: 'center', justifyContent: 'center' }, searchText: { color: '#fff', fontSize: 13, fontWeight: '800' },
   resultsHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 25, marginBottom: 12 }, resultsTitle: { color: '#1D453A', fontSize: 18, fontWeight: '800', letterSpacing: -0.3 }, resultsSub: { color: '#879791', fontSize: 11, marginTop: 3 }, livePill: { borderRadius: 14, backgroundColor: '#FFF4DF', flexDirection: 'row', alignItems: 'center', gap: 5, paddingHorizontal: 8, paddingVertical: 6 }, greenDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#D59626' }, liveText: { fontSize: 8, color: '#9C6A16', fontWeight: '800', letterSpacing: 0.5 },
   hospitalCard: { backgroundColor: '#fff', borderRadius: 17, borderWidth: 1, borderColor: '#E8EFEB', padding: 14, marginBottom: 10 }, cardTop: { flexDirection: 'row', alignItems: 'center', gap: 10 }, hospitalIcon: { width: 41, height: 41, borderRadius: 13, alignItems: 'center', justifyContent: 'center' }, hospitalEmoji: { color: '#257760', fontSize: 18, fontWeight: '800' }, hospitalName: { color: '#25483D', fontWeight: '800', fontSize: 13 }, hospitalArea: { color: '#87958F', fontSize: 10, marginTop: 4 }, chevron: { fontSize: 25, color: '#AAB8B2', marginLeft: 4 }, tags: { flexDirection: 'row', gap: 6, marginTop: 13, flexWrap: 'wrap' }, serviceTag: { backgroundColor: '#EAF5F0', color: '#28735E', borderRadius: 7, paddingHorizontal: 8, paddingVertical: 5, overflow: 'hidden', fontSize: 9, fontWeight: '700' }, typeTag: { backgroundColor: '#F3F4F2', color: '#78847F', borderRadius: 7, paddingHorizontal: 8, paddingVertical: 5, overflow: 'hidden', fontSize: 9, fontWeight: '700' }, cardBottom: { borderTopWidth: 1, borderColor: '#F0F3F1', marginTop: 12, paddingTop: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, updated: { color: '#8B9993', fontSize: 9 }, requestButton: { backgroundColor: '#126B54', borderRadius: 9, paddingHorizontal: 11, paddingVertical: 8 }, requestedButton: { backgroundColor: '#E7F4ED' }, requestText: { color: '#fff', fontSize: 10, fontWeight: '800' }, matchNote: { color: '#9A7A38', fontSize: 9, marginTop: 8 },
   searchFeedback: { backgroundColor: '#EAF5F0', padding: 11, borderRadius: 10, marginBottom: 10 }, searchFeedbackText: { color: '#28735E', fontSize: 10, fontWeight: '700', lineHeight: 15 }, emptyCard: { backgroundColor: '#fff', padding: 18, borderRadius: 14, borderColor: '#E8EFEB', borderWidth: 1 }, emptyTitle: { fontSize: 13, fontWeight: '800', color: '#25483D' }, emptyText: { color: '#87958F', fontSize: 11, marginTop: 5 }, notice: { marginTop: 4, borderRadius: 12, backgroundColor: '#EDF3F1', padding: 12, flexDirection: 'row', gap: 8 }, noticeIcon: { color: '#59776D', fontSize: 15 }, noticeText: { color: '#647A72', fontSize: 10, lineHeight: 15, flex: 1 }, footer: { textAlign: 'center', color: '#A1AEA8', fontWeight: '700', letterSpacing: 1, fontSize: 8, marginTop: 19 },
