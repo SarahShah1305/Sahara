@@ -1,0 +1,2858 @@
+{
+  "sourceFile": "hyderabad_30_hospitals_dataset.xlsx",
+  "sourceSheet": "Hyderabad Hospitals",
+  "sourceNote": "Friend-provided workbook; source field is preserved from the workbook and has not been independently verified.",
+  "capacityAndPriceNotice": "Treat capacity, contact, verification labels, and charges as unverified until each hospital confirms them directly.",
+  "records": [
+    {
+      "id": "HYD-001",
+      "name": "Hashim Medical City Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Cardiology",
+        "Dermatology",
+        "Pulmonology",
+        "ENT",
+        "Gastroenterology",
+        "Neurology",
+        "Nephrology & Urology",
+        "Orthopedics",
+        "Ophthalmology"
+      ],
+      "city": "Hyderabad",
+      "area": "Bypass Road",
+      "address": "Hashim Medical City Hospital, Main Bypass Road, Near Palm Enclave, Main Bypass Road, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.360694,
+      "longitude": 68.353774,
+      "phone": "226121892",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 381,
+      "occupiedBedsReported": 148,
+      "availableBedsReported": 221,
+      "occupancyPctReported": 38.8,
+      "resources": {
+        "generalBeds": {
+          "total": 297,
+          "occupied": 115,
+          "unavailable": 8,
+          "available": 174
+        },
+        "emergencyBeds": {
+          "total": 30,
+          "occupied": 11,
+          "unavailable": 1,
+          "available": 18
+        },
+        "icuBeds": {
+          "total": 22,
+          "occupied": 11,
+          "unavailable": 1,
+          "available": 10
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 23,
+          "occupied": 7,
+          "unavailable": 1,
+          "available": 15
+        },
+        "operationTheatres": {
+          "total": 3,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 2
+        },
+        "isolationBeds": {
+          "total": 17,
+          "occupied": 7,
+          "unavailable": 2,
+          "available": 8
+        },
+        "dialysisMachines": {
+          "total": 12,
+          "occupied": 5,
+          "unavailable": 2,
+          "available": 5
+        },
+        "traumaBeds": {
+          "total": 15,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 11
+        },
+        "ambulances": {
+          "total": 7,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 4
+        }
+      },
+      "minDailyChargePKR": 1500,
+      "maxDailyChargePKR": 30000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 70 beds, 41 free, PKR 2,500/day | Female General Ward [General Ward]: 70 beds, 41 free, PKR 1,500/day | Semi-Private Rooms [Semi-Private Room]: 38 beds, 22 free, PKR 6,500/day | Private Rooms [Private Room]: 45 beds, 26 free, PKR 9,000/day | Deluxe Rooms [Deluxe Room]: 16 beds, 10 free, PKR 21,500/day | VIP Suites [VIP Suite]: 7 beds, 4 free, PKR 30,000/day | Surgical Ward [Surgical Ward]: 32 beds, 19 free, PKR 3,000/day | Orthopedic Ward [Orthopedic Ward]: 19 beds, 11 free, PKR 3,500/day | Emergency Department [Emergency Bay]: 30 beds, 18 free, PKR 6,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 22 beds, 10 free, PKR 57,000/day | Isolation Ward [Isolation Room]: 17 beds, 8 free, PKR 23,500/day | Trauma Unit [Trauma Bay]: 15 beds, 11 free, PKR 13,000/day"
+    },
+    {
+      "id": "HYD-002",
+      "name": "Happy Homes General Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Orthopedics",
+        "Ophthalmology",
+        "Diabetes & Endocrinology",
+        "ENT",
+        "Dermatology",
+        "Pulmonology"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Happy Homes General Hospital, Bagh-E-Mohammad,Society, 1 Happy Homes Road, Citizen Colony, Qasimabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.418905,
+      "longitude": 68.331077,
+      "phone": "4232591427",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 368,
+      "occupiedBedsReported": 229,
+      "availableBedsReported": 134,
+      "occupancyPctReported": 62.2,
+      "resources": {
+        "generalBeds": {
+          "total": 298,
+          "occupied": 180,
+          "unavailable": 5,
+          "available": 113
+        },
+        "emergencyBeds": {
+          "total": 11,
+          "occupied": 8,
+          "unavailable": 0,
+          "available": 3
+        },
+        "icuBeds": {
+          "total": 31,
+          "occupied": 21,
+          "unavailable": 0,
+          "available": 10
+        },
+        "nicuBeds": {
+          "total": 8,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 3
+        },
+        "ventilators": {
+          "total": 15,
+          "occupied": 15,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 10,
+          "occupied": 7,
+          "unavailable": 0,
+          "available": 3
+        },
+        "isolationBeds": {
+          "total": 9,
+          "occupied": 7,
+          "unavailable": 0,
+          "available": 2
+        },
+        "dialysisMachines": {
+          "total": 6,
+          "occupied": 4,
+          "unavailable": 1,
+          "available": 1
+        },
+        "traumaBeds": {
+          "total": 11,
+          "occupied": 8,
+          "unavailable": 0,
+          "available": 3
+        },
+        "ambulances": {
+          "total": 4,
+          "occupied": 3,
+          "unavailable": 1,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 46000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 71 beds, 27 free, PKR 2,000/day | Female General Ward [General Ward]: 71 beds, 27 free, PKR 3,500/day | Semi-Private Rooms [Semi-Private Room]: 38 beds, 14 free, PKR 4,500/day | Private Rooms [Private Room]: 45 beds, 17 free, PKR 12,500/day | Deluxe Rooms [Deluxe Room]: 16 beds, 6 free, PKR 18,500/day | VIP Suites [VIP Suite]: 6 beds, 2 free, PKR 46,000/day | Surgical Ward [Surgical Ward]: 32 beds, 12 free, PKR 4,000/day | Orthopedic Ward [Orthopedic Ward]: 19 beds, 8 free, PKR 3,000/day | Emergency Department [Emergency Bay]: 11 beds, 3 free, PKR 3,500/day | Intensive Care Unit (ICU) [ICU Cubicle]: 31 beds, 10 free, PKR 59,500/day | Neonatal ICU (NICU) [NICU Incubator Bay]: 8 beds, 3 free, PKR 25,500/day | Isolation Ward [Isolation Room]: 9 beds, 2 free, PKR 22,000/day | Trauma Unit [Trauma Bay]: 11 beds, 3 free, PKR 10,000/day"
+    },
+    {
+      "id": "HYD-003",
+      "name": "Imc Inayat Ul Shifa Mental And General Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Psychiatry",
+        "Nephrology & Urology",
+        "Ophthalmology",
+        "Pulmonology",
+        "ENT",
+        "Orthopedics",
+        "Diabetes & Endocrinology",
+        "Oncology",
+        "Dermatology",
+        "Gastroenterology"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Imc Inayat Ul Shifa Mental And General Hospital, House No: 10 G.O.R Unit No 1 Latifabad, Beside Nadra Office?Gor Colony, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.371991,
+      "longitude": 68.352259,
+      "phone": "3113000090",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 234,
+      "occupiedBedsReported": 197,
+      "availableBedsReported": 31,
+      "occupancyPctReported": 84.2,
+      "resources": {
+        "generalBeds": {
+          "total": 137,
+          "occupied": 110,
+          "unavailable": 2,
+          "available": 25
+        },
+        "emergencyBeds": {
+          "total": 28,
+          "occupied": 28,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 37,
+          "occupied": 34,
+          "unavailable": 2,
+          "available": 1
+        },
+        "nicuBeds": {
+          "total": 7,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 2
+        },
+        "ventilators": {
+          "total": 25,
+          "occupied": 23,
+          "unavailable": 2,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 6,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 3
+        },
+        "isolationBeds": {
+          "total": 16,
+          "occupied": 12,
+          "unavailable": 2,
+          "available": 2
+        },
+        "dialysisMachines": {
+          "total": 9,
+          "occupied": 7,
+          "unavailable": 0,
+          "available": 2
+        },
+        "traumaBeds": {
+          "total": 9,
+          "occupied": 8,
+          "unavailable": 0,
+          "available": 1
+        },
+        "ambulances": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 1500,
+      "maxDailyChargePKR": 39000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 32 beds, 5 free, PKR 2,500/day | Female General Ward [General Ward]: 32 beds, 5 free, PKR 1,500/day | Semi-Private Rooms [Semi-Private Room]: 18 beds, 4 free, PKR 4,500/day | Private Rooms [Private Room]: 21 beds, 4 free, PKR 13,500/day | Deluxe Rooms [Deluxe Room]: 7 beds, 1 free, PKR 19,500/day | VIP Suites [VIP Suite]: 3 beds, 1 free, PKR 39,000/day | Surgical Ward [Surgical Ward]: 15 beds, 3 free, PKR 4,500/day | Orthopedic Ward [Orthopedic Ward]: 9 beds, 2 free, PKR 3,500/day | Emergency Department [Emergency Bay]: 28 beds, 0 free, PKR 6,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 37 beds, 1 free, PKR 48,500/day | Neonatal ICU (NICU) [NICU Incubator Bay]: 7 beds, 2 free, PKR 28,500/day | Isolation Ward [Isolation Room]: 16 beds, 2 free, PKR 19,500/day | Trauma Unit [Trauma Bay]: 9 beds, 1 free, PKR 10,500/day"
+    },
+    {
+      "id": "HYD-004",
+      "name": "Jeejal Maa Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Nephrology & Urology",
+        "Pediatrics",
+        "Gynecology & Obstetrics",
+        "Pulmonology",
+        "ENT",
+        "Neurology",
+        "Gastroenterology",
+        "Psychiatry",
+        "Ophthalmology"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Jeejal Maa Hospital, Wadhuwa Road, Qasimabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.413348,
+      "longitude": 68.329768,
+      "phone": "222656324",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 211,
+      "occupiedBedsReported": 182,
+      "availableBedsReported": 21,
+      "occupancyPctReported": 86.3,
+      "resources": {
+        "generalBeds": {
+          "total": 143,
+          "occupied": 122,
+          "unavailable": 5,
+          "available": 16
+        },
+        "emergencyBeds": {
+          "total": 11,
+          "occupied": 10,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 21,
+          "occupied": 20,
+          "unavailable": 1,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 16,
+          "occupied": 12,
+          "unavailable": 2,
+          "available": 2
+        },
+        "ventilators": {
+          "total": 24,
+          "occupied": 22,
+          "unavailable": 1,
+          "available": 1
+        },
+        "operationTheatres": {
+          "total": 5,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 2
+        },
+        "isolationBeds": {
+          "total": 6,
+          "occupied": 6,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 17,
+          "occupied": 14,
+          "unavailable": 3,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 14,
+          "occupied": 12,
+          "unavailable": 0,
+          "available": 2
+        },
+        "ambulances": {
+          "total": 4,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 2
+        }
+      },
+      "minDailyChargePKR": 3000,
+      "maxDailyChargePKR": 36500,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 28 beds, 3 free, PKR 3,000/day | Female General Ward [General Ward]: 28 beds, 3 free, PKR 3,500/day | Semi-Private Rooms [Semi-Private Room]: 16 beds, 1 free, PKR 4,500/day | Private Rooms [Private Room]: 18 beds, 2 free, PKR 11,500/day | Deluxe Rooms [Deluxe Room]: 6 beds, 1 free, PKR 19,000/day | VIP Suites [VIP Suite]: 3 beds, 0 free, PKR 36,500/day | Pediatric Ward [Pediatric Ward]: 13 beds, 2 free, PKR 3,500/day | Maternity / Gynae Ward [Maternity Ward]: 18 beds, 2 free, PKR 3,500/day | Surgical Ward [Surgical Ward]: 13 beds, 2 free, PKR 4,000/day | Emergency Department [Emergency Bay]: 11 beds, 1 free, PKR 5,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 21 beds, 0 free, PKR 55,500/day | Neonatal ICU (NICU) [NICU Incubator Bay]: 16 beds, 2 free, PKR 29,000/day | Isolation Ward [Isolation Room]: 6 beds, 0 free, PKR 22,000/day | Trauma Unit [Trauma Bay]: 14 beds, 2 free, PKR 12,000/day"
+    },
+    {
+      "id": "HYD-005",
+      "name": "Doctors Line Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Psychiatry",
+        "Pulmonology",
+        "Orthopedics",
+        "Neurology",
+        "Oncology",
+        "Dermatology",
+        "Gastroenterology",
+        "Pediatrics",
+        "ENT",
+        "Nephrology & Urology"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Doctors Line Hospital, Gg Heights, Doctors Ln, Opposite Fatima Heights, Saddar, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.39539,
+      "longitude": 68.365956,
+      "phone": "4232591427",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 199,
+      "occupiedBedsReported": 134,
+      "availableBedsReported": 59,
+      "occupancyPctReported": 67.3,
+      "resources": {
+        "generalBeds": {
+          "total": 96,
+          "occupied": 61,
+          "unavailable": 3,
+          "available": 32
+        },
+        "emergencyBeds": {
+          "total": 28,
+          "occupied": 21,
+          "unavailable": 0,
+          "available": 7
+        },
+        "icuBeds": {
+          "total": 32,
+          "occupied": 24,
+          "unavailable": 1,
+          "available": 7
+        },
+        "nicuBeds": {
+          "total": 13,
+          "occupied": 10,
+          "unavailable": 0,
+          "available": 3
+        },
+        "ventilators": {
+          "total": 27,
+          "occupied": 20,
+          "unavailable": 3,
+          "available": 4
+        },
+        "operationTheatres": {
+          "total": 6,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 3
+        },
+        "isolationBeds": {
+          "total": 14,
+          "occupied": 9,
+          "unavailable": 1,
+          "available": 4
+        },
+        "dialysisMachines": {
+          "total": 18,
+          "occupied": 9,
+          "unavailable": 0,
+          "available": 9
+        },
+        "traumaBeds": {
+          "total": 16,
+          "occupied": 9,
+          "unavailable": 1,
+          "available": 6
+        },
+        "ambulances": {
+          "total": 8,
+          "occupied": 4,
+          "unavailable": 1,
+          "available": 3
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 34500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 21 beds, 7 free, PKR 2,500/day | Female General Ward [General Ward]: 20 beds, 6 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 11 beds, 4 free, PKR 5,000/day | Private Rooms [Private Room]: 13 beds, 4 free, PKR 10,000/day | Deluxe Rooms [Deluxe Room]: 5 beds, 2 free, PKR 21,500/day | VIP Suites [VIP Suite]: 2 beds, 1 free, PKR 34,500/day | Pediatric Ward [Pediatric Ward]: 9 beds, 3 free, PKR 3,000/day | Surgical Ward [Surgical Ward]: 9 beds, 3 free, PKR 5,500/day | Orthopedic Ward [Orthopedic Ward]: 6 beds, 2 free, PKR 5,500/day | Emergency Department [Emergency Bay]: 28 beds, 7 free, PKR 5,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 32 beds, 7 free, PKR 62,500/day | Neonatal ICU (NICU) [NICU Incubator Bay]: 13 beds, 3 free, PKR 44,500/day | Isolation Ward [Isolation Room]: 14 beds, 4 free, PKR 20,000/day | Trauma Unit [Trauma Bay]: 16 beds, 6 free, PKR 12,000/day"
+    },
+    {
+      "id": "HYD-006",
+      "name": "Hilal-E-Ahmer Red Crescent General Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Charitable / Trust",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Psychiatry",
+        "Nephrology & Urology",
+        "Diabetes & Endocrinology",
+        "Pulmonology",
+        "Gastroenterology",
+        "Ophthalmology",
+        "Cardiology",
+        "Oncology",
+        "ENT",
+        "Gynecology & Obstetrics"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Hilal-E-Ahmer Red Crescent General Hospital, Unit No 6, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.372942,
+      "longitude": 68.359161,
+      "phone": "3173923276",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 192,
+      "occupiedBedsReported": 149,
+      "availableBedsReported": 35,
+      "occupancyPctReported": 77.6,
+      "resources": {
+        "generalBeds": {
+          "total": 103,
+          "occupied": 77,
+          "unavailable": 4,
+          "available": 22
+        },
+        "emergencyBeds": {
+          "total": 15,
+          "occupied": 14,
+          "unavailable": 1,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 34,
+          "occupied": 28,
+          "unavailable": 1,
+          "available": 5
+        },
+        "nicuBeds": {
+          "total": 18,
+          "occupied": 13,
+          "unavailable": 1,
+          "available": 4
+        },
+        "ventilators": {
+          "total": 28,
+          "occupied": 28,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 8,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 3
+        },
+        "isolationBeds": {
+          "total": 6,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 1
+        },
+        "dialysisMachines": {
+          "total": 6,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 1
+        },
+        "traumaBeds": {
+          "total": 16,
+          "occupied": 12,
+          "unavailable": 1,
+          "available": 3
+        },
+        "ambulances": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 1,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 1000,
+      "maxDailyChargePKR": 18000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 23 beds, 5 free, PKR 1,000/day | Female General Ward [General Ward]: 23 beds, 5 free, PKR 1,500/day | Semi-Private Rooms [Semi-Private Room]: 12 beds, 3 free, PKR 2,000/day | Private Rooms [Private Room]: 14 beds, 3 free, PKR 7,000/day | Deluxe Rooms [Deluxe Room]: 5 beds, 1 free, PKR 11,500/day | VIP Suites [VIP Suite]: 2 beds, 0 free, PKR 18,000/day | Maternity / Gynae Ward [Maternity Ward]: 14 beds, 3 free, PKR 3,000/day | Surgical Ward [Surgical Ward]: 10 beds, 2 free, PKR 2,000/day | Emergency Department [Emergency Bay]: 15 beds, 0 free, PKR 3,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 34 beds, 5 free, PKR 17,000/day | Neonatal ICU (NICU) [NICU Incubator Bay]: 18 beds, 4 free, PKR 21,000/day | Isolation Ward [Isolation Room]: 6 beds, 1 free, PKR 5,000/day | Trauma Unit [Trauma Bay]: 16 beds, 3 free, PKR 3,000/day"
+    },
+    {
+      "id": "HYD-007",
+      "name": "Ibne Qasim Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Dermatology",
+        "Diabetes & Endocrinology",
+        "Pulmonology",
+        "ENT",
+        "Ophthalmology",
+        "Gynecology & Obstetrics"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Ibne Qasim Hospital, Alamdar Chowk, Qasimabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.421182,
+      "longitude": 68.328867,
+      "phone": "222674062",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 82,
+      "occupiedBedsReported": 77,
+      "availableBedsReported": 2,
+      "occupancyPctReported": 93.9,
+      "resources": {
+        "generalBeds": {
+          "total": 67,
+          "occupied": 62,
+          "unavailable": 3,
+          "available": 2
+        },
+        "emergencyBeds": {
+          "total": 8,
+          "occupied": 8,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 3,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 22000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 15 beds, 0 free, PKR 3,000/day | Female General Ward [General Ward]: 15 beds, 0 free, PKR 2,000/day | Semi-Private Rooms [Semi-Private Room]: 8 beds, 0 free, PKR 7,000/day | Private Rooms [Private Room]: 10 beds, 1 free, PKR 10,000/day | Deluxe Rooms [Deluxe Room]: 3 beds, 0 free, PKR 22,000/day | Maternity / Gynae Ward [Maternity Ward]: 9 beds, 1 free, PKR 6,000/day | Surgical Ward [Surgical Ward]: 7 beds, 0 free, PKR 5,500/day | Emergency Department [Emergency Bay]: 8 beds, 0 free, PKR 4,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 3 beds, 0 free, PKR 52,500/day | Isolation Ward [Isolation Room]: 2 beds, 0 free, PKR 13,500/day | Trauma Unit [Trauma Bay]: 2 beds, 0 free, PKR 11,500/day"
+    },
+    {
+      "id": "HYD-008",
+      "name": "Cmh (Hyderabad) Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Government",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Nephrology & Urology",
+        "Psychiatry",
+        "Pediatrics",
+        "ENT",
+        "Diabetes & Endocrinology",
+        "Dermatology"
+      ],
+      "city": "Hyderabad",
+      "area": "Cantonment",
+      "address": "Cmh (Hyderabad) Hospital, Cmh Road, Cant, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.383768,
+      "longitude": 68.357401,
+      "phone": "(022) 2780078",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 74,
+      "occupiedBedsReported": 57,
+      "availableBedsReported": 15,
+      "occupancyPctReported": 77,
+      "resources": {
+        "generalBeds": {
+          "total": 49,
+          "occupied": 35,
+          "unavailable": 1,
+          "available": 13
+        },
+        "emergencyBeds": {
+          "total": 10,
+          "occupied": 8,
+          "unavailable": 0,
+          "available": 2
+        },
+        "icuBeds": {
+          "total": 10,
+          "occupied": 9,
+          "unavailable": 1,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 9,
+          "occupied": 7,
+          "unavailable": 1,
+          "available": 1
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 5,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 6,
+          "occupied": 5,
+          "unavailable": 0,
+          "available": 1
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 0,
+      "maxDailyChargePKR": 1400,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 17 beds, 4 free, PKR 0/day | Female General Ward [General Ward]: 17 beds, 5 free, PKR 0/day | Private Room Block [Private Room]: 3 beds, 1 free, PKR 1,400/day | Pediatric Ward [Pediatric Ward]: 6 beds, 1 free, PKR 0/day | Surgical Ward [Surgical Ward]: 6 beds, 2 free, PKR 500/day | Emergency Department [Emergency Bay]: 10 beds, 2 free, PKR 0/day | Intensive Care Unit (ICU) [ICU Cubicle]: 10 beds, 0 free, PKR 4,000/day | Isolation Ward [Isolation Room]: 5 beds, 0 free, PKR 1,600/day"
+    },
+    {
+      "id": "HYD-009",
+      "name": "Hajani Day And Night Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Ophthalmology",
+        "Neurology",
+        "Nephrology & Urology",
+        "Psychiatry"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Hajani Day And Night Hospital, Near Al-Rahim Shopping Center, Saddar Police Line, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.390237,
+      "longitude": 68.36401,
+      "phone": "022-2729911",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 67,
+      "occupiedBedsReported": 56,
+      "availableBedsReported": 8,
+      "occupancyPctReported": 83.6,
+      "resources": {
+        "generalBeds": {
+          "total": 49,
+          "occupied": 41,
+          "unavailable": 1,
+          "available": 7
+        },
+        "emergencyBeds": {
+          "total": 5,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 8,
+          "occupied": 7,
+          "unavailable": 1,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 5,
+          "occupied": 4,
+          "unavailable": 1,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 8,
+          "occupied": 5,
+          "unavailable": 1,
+          "available": 2
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 18500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 13 beds, 1 free, PKR 2,000/day | Female General Ward [General Ward]: 12 beds, 2 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 7 beds, 1 free, PKR 7,000/day | Private Rooms [Private Room]: 8 beds, 1 free, PKR 10,500/day | Deluxe Rooms [Deluxe Room]: 3 beds, 1 free, PKR 18,500/day | Surgical Ward [Surgical Ward]: 6 beds, 1 free, PKR 3,000/day | Emergency Department [Emergency Bay]: 5 beds, 1 free, PKR 5,000/day | Intensive Care Unit (ICU) [ICU Cubicle]: 8 beds, 0 free, PKR 53,500/day | Isolation Ward [Isolation Room]: 5 beds, 0 free, PKR 21,500/day"
+    },
+    {
+      "id": "HYD-010",
+      "name": "Red Crescent Institute Of Cardiology Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Charitable / Trust",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Cardiology",
+        "Dermatology",
+        "Neurology",
+        "Diabetes & Endocrinology",
+        "ENT"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Red Crescent Institute Of Cardiology Hospital, Unit 2, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.376213,
+      "longitude": 68.349933,
+      "phone": "0300 9370787",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 55,
+      "occupiedBedsReported": 34,
+      "availableBedsReported": 21,
+      "occupancyPctReported": 61.8,
+      "resources": {
+        "generalBeds": {
+          "total": 29,
+          "occupied": 18,
+          "unavailable": 0,
+          "available": 11
+        },
+        "emergencyBeds": {
+          "total": 7,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 3
+        },
+        "icuBeds": {
+          "total": 11,
+          "occupied": 7,
+          "unavailable": 0,
+          "available": 4
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 5,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 2
+        },
+        "operationTheatres": {
+          "total": 3,
+          "occupied": 1,
+          "unavailable": 1,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 5,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 2
+        },
+        "dialysisMachines": {
+          "total": 7,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 3
+        },
+        "traumaBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 1500,
+      "maxDailyChargePKR": 12000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 7 beds, 3 free, PKR 1,500/day | Female General Ward [General Ward]: 8 beds, 3 free, PKR 1,500/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 1 free, PKR 3,000/day | Private Rooms [Private Room]: 5 beds, 2 free, PKR 6,500/day | Deluxe Rooms [Deluxe Room]: 2 beds, 1 free, PKR 12,000/day | Surgical Ward [Surgical Ward]: 3 beds, 1 free, PKR 2,000/day | Emergency Department [Emergency Bay]: 7 beds, 3 free, PKR 2,500/day | Intensive Care Unit (ICU) [ICU Cubicle]: 11 beds, 4 free, PKR 19,000/day | Isolation Ward [Isolation Room]: 5 beds, 2 free, PKR 7,000/day | Trauma Unit [Trauma Bay]: 3 beds, 1 free, PKR 5,000/day"
+    },
+    {
+      "id": "HYD-011",
+      "name": "St. Elizabeth Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Dermatology",
+        "Gynecology & Obstetrics",
+        "Surgery"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "St. Elizabeth Hospital, Unit No 7, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.371814,
+      "longitude": 68.350776,
+      "phone": "(022) 3821785",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 37,
+      "occupiedBedsReported": 20,
+      "availableBedsReported": 17,
+      "occupancyPctReported": 54.1,
+      "resources": {
+        "generalBeds": {
+          "total": 29,
+          "occupied": 16,
+          "unavailable": 0,
+          "available": 13
+        },
+        "emergencyBeds": {
+          "total": 5,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 3
+        },
+        "icuBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "operationTheatres": {
+          "total": 1,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 10500,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 7 beds, 3 free, PKR 2,500/day | Female General Ward [General Ward]: 7 beds, 3 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 2 free, PKR 4,500/day | Private Rooms [Private Room]: 4 beds, 2 free, PKR 10,500/day | Maternity / Gynae Ward [Maternity Ward]: 4 beds, 2 free, PKR 5,000/day | Surgical Ward [Surgical Ward]: 3 beds, 1 free, PKR 5,500/day | Emergency Department [Emergency Bay]: 5 beds, 3 free, PKR 4,500/day | Intensive Care Unit (ICU) [ICU Cubicle]: 3 beds, 1 free, PKR 61,500/day"
+    },
+    {
+      "id": "HYD-012",
+      "name": "Maajee Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Orthopedics",
+        "Cardiology",
+        "Pulmonology"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Maajee Hospital, Main Autobahn Road, Unit No 8, Latifabad, 7 Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.373747,
+      "longitude": 68.352356,
+      "phone": "223408001",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 34,
+      "occupiedBedsReported": 22,
+      "availableBedsReported": 11,
+      "occupancyPctReported": 64.7,
+      "resources": {
+        "generalBeds": {
+          "total": 29,
+          "occupied": 19,
+          "unavailable": 0,
+          "available": 10
+        },
+        "emergencyBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 1,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 3000,
+      "maxDailyChargePKR": 19500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 9 beds, 3 free, PKR 3,500/day | Female General Ward [General Ward]: 9 beds, 3 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 5 beds, 2 free, PKR 7,500/day | Private Rooms [Private Room]: 5 beds, 2 free, PKR 8,500/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 19,500/day | Emergency Department [Emergency Bay]: 3 beds, 1 free, PKR 5,500/day | Isolation Ward [Isolation Room]: 2 beds, 0 free, PKR 23,000/day"
+    },
+    {
+      "id": "HYD-013",
+      "name": "Zainulabdin Trust Latifabad Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Charitable / Trust",
+      "specialties": [
+        "General Medicine",
+        "Oncology",
+        "Psychiatry",
+        "Orthopedics"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Zainulabdin Trust Latifabad Hospital, Latifabad, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.374636,
+      "longitude": 68.350812,
+      "phone": "3002207669",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 33,
+      "occupiedBedsReported": 32,
+      "availableBedsReported": 0,
+      "occupancyPctReported": 97,
+      "resources": {
+        "generalBeds": {
+          "total": 29,
+          "occupied": 28,
+          "unavailable": 1,
+          "available": 0
+        },
+        "emergencyBeds": {
+          "total": 4,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 1000,
+      "maxDailyChargePKR": 12000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 9 beds, 0 free, PKR 1,000/day | Female General Ward [General Ward]: 9 beds, 0 free, PKR 2,000/day | Semi-Private Rooms [Semi-Private Room]: 5 beds, 0 free, PKR 2,500/day | Private Rooms [Private Room]: 5 beds, 0 free, PKR 5,500/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 12,000/day | Emergency Department [Emergency Bay]: 4 beds, 0 free, PKR 2,000/day"
+    },
+    {
+      "id": "HYD-014",
+      "name": "Al-Khidmat Hospital Mother & Child Healthcare",
+      "facilityType": "Hospital",
+      "ownership": "Charitable / Trust",
+      "specialties": [
+        "General Medicine",
+        "Pediatrics",
+        "Gynecology & Obstetrics",
+        "Neurology",
+        "Surgery"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Al-Khidmat Hospital Mother & Child Healthcare, Banglow No 255/C, Latifabad Unit 9, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.362289,
+      "longitude": 68.347461,
+      "phone": "(022) 3821025",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 31,
+      "occupiedBedsReported": 26,
+      "availableBedsReported": 5,
+      "occupancyPctReported": 83.9,
+      "resources": {
+        "generalBeds": {
+          "total": 25,
+          "occupied": 20,
+          "unavailable": 0,
+          "available": 5
+        },
+        "emergencyBeds": {
+          "total": 3,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 1,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 3,
+          "occupied": 3,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 1000,
+      "maxDailyChargePKR": 11000,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 5 beds, 1 free, PKR 1,000/day | Female General Ward [General Ward]: 5 beds, 1 free, PKR 1,000/day | Semi-Private Rooms [Semi-Private Room]: 3 beds, 0 free, PKR 2,000/day | Private Rooms [Private Room]: 3 beds, 1 free, PKR 6,500/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 11,000/day | Pediatric Ward [Pediatric Ward]: 3 beds, 1 free, PKR 1,500/day | Maternity / Gynae Ward [Maternity Ward]: 3 beds, 1 free, PKR 2,000/day | Surgical Ward [Surgical Ward]: 2 beds, 0 free, PKR 1,500/day | Emergency Department [Emergency Bay]: 3 beds, 0 free, PKR 2,000/day | Isolation Ward [Isolation Room]: 3 beds, 0 free, PKR 12,000/day"
+    },
+    {
+      "id": "HYD-015",
+      "name": "Al Quresh Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Gastroenterology",
+        "Psychiatry"
+      ],
+      "city": "Hyderabad",
+      "area": "Hirabad",
+      "address": "Al Quresh Hospital, Heerabad, Al Quresh Hospital Road, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.395764,
+      "longitude": 68.37133,
+      "phone": "0342 3521268",
+      "open24x7": false,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 30,
+      "occupiedBedsReported": 23,
+      "availableBedsReported": 6,
+      "occupancyPctReported": 76.7,
+      "resources": {
+        "generalBeds": {
+          "total": 27,
+          "occupied": 21,
+          "unavailable": 1,
+          "available": 5
+        },
+        "emergencyBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 18000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 8 beds, 1 free, PKR 3,000/day | Female General Ward [General Ward]: 8 beds, 2 free, PKR 2,000/day | Semi-Private Rooms [Semi-Private Room]: 5 beds, 1 free, PKR 6,500/day | Private Rooms [Private Room]: 5 beds, 1 free, PKR 12,000/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 18,000/day | Emergency Department [Emergency Bay]: 3 beds, 1 free, PKR 4,500/day"
+    },
+    {
+      "id": "HYD-016",
+      "name": "Dr. Nami And Sons Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Gynecology & Obstetrics"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Dr. Nami And Sons Hospital, 386 Saddar Bazar Near Haji Shah Chouk, Saddar Bazar, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.392973,
+      "longitude": 68.367941,
+      "phone": "222731162",
+      "open24x7": false,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 30,
+      "occupiedBedsReported": 23,
+      "availableBedsReported": 6,
+      "occupancyPctReported": 76.7,
+      "resources": {
+        "generalBeds": {
+          "total": 25,
+          "occupied": 19,
+          "unavailable": 1,
+          "available": 5
+        },
+        "emergencyBeds": {
+          "total": 5,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 3000,
+      "maxDailyChargePKR": 13000,
+      "verificationLabelInSource": "Unverified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 6 beds, 0 free, PKR 3,000/day | Female General Ward [General Ward]: 6 beds, 1 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 3 beds, 1 free, PKR 6,000/day | Private Rooms [Private Room]: 4 beds, 1 free, PKR 13,000/day | Maternity / Gynae Ward [Maternity Ward]: 4 beds, 1 free, PKR 5,500/day | Surgical Ward [Surgical Ward]: 2 beds, 1 free, PKR 4,500/day | Emergency Department [Emergency Bay]: 5 beds, 1 free, PKR 4,500/day"
+    },
+    {
+      "id": "HYD-017",
+      "name": "Zubaida Shafee Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Pediatrics",
+        "Ophthalmology",
+        "Psychiatry"
+      ],
+      "city": "Hyderabad",
+      "area": "Jamshoro Road",
+      "address": "Zubaida Shafee Hospital, Beside Honda Palace Showroom, Bhitai Nagar, Main Jamshoro Road, Main Jamshoro Road, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.408611,
+      "longitude": 68.314914,
+      "phone": "3111222398",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 29,
+      "occupiedBedsReported": 18,
+      "availableBedsReported": 11,
+      "occupancyPctReported": 62.1,
+      "resources": {
+        "generalBeds": {
+          "total": 29,
+          "occupied": 18,
+          "unavailable": 0,
+          "available": 11
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 2
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 3000,
+      "maxDailyChargePKR": 15500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 8 beds, 3 free, PKR 3,000/day | Female General Ward [General Ward]: 8 beds, 3 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 2 free, PKR 7,000/day | Private Rooms [Private Room]: 5 beds, 2 free, PKR 14,000/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 15,500/day | Pediatric Ward [Pediatric Ward]: 3 beds, 1 free, PKR 4,000/day"
+    },
+    {
+      "id": "HYD-018",
+      "name": "Helping Minds Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Neurology",
+        "Pediatrics"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Helping Minds Hospital, Helping Mind, Bungalow # 113-A Unit# 3 Latifabad, Hyderabad., Bahn Road, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.370712,
+      "longitude": 68.358565,
+      "phone": "3458880605",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 26,
+      "occupiedBedsReported": 18,
+      "availableBedsReported": 7,
+      "occupancyPctReported": 69.2,
+      "resources": {
+        "generalBeds": {
+          "total": 26,
+          "occupied": 18,
+          "unavailable": 1,
+          "available": 7
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 15500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 7 beds, 1 free, PKR 2,000/day | Female General Ward [General Ward]: 7 beds, 2 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 1 free, PKR 8,000/day | Private Rooms [Private Room]: 4 beds, 1 free, PKR 13,000/day | Deluxe Rooms [Deluxe Room]: 1 beds, 1 free, PKR 15,500/day | Pediatric Ward [Pediatric Ward]: 3 beds, 1 free, PKR 4,500/day"
+    },
+    {
+      "id": "HYD-019",
+      "name": "Rajputana Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Nephrology & Urology",
+        "Psychiatry",
+        "Gynecology & Obstetrics",
+        "Cardiology"
+      ],
+      "city": "Hyderabad",
+      "area": "Jamshoro Road",
+      "address": "Rajputana Hospital, Main Jamshoro Road Near Karachi Bypass, Opposite Gulistan-E-Sajjad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.413833,
+      "longitude": 68.316845,
+      "phone": "222117081",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 25,
+      "occupiedBedsReported": 13,
+      "availableBedsReported": 10,
+      "occupancyPctReported": 52,
+      "resources": {
+        "generalBeds": {
+          "total": 23,
+          "occupied": 12,
+          "unavailable": 2,
+          "available": 9
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 14000,
+      "verificationLabelInSource": "Unverified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 6 beds, 2 free, PKR 2,500/day | Female General Ward [General Ward]: 6 beds, 2 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 3 beds, 1 free, PKR 7,000/day | Private Rooms [Private Room]: 4 beds, 2 free, PKR 14,000/day | Maternity / Gynae Ward [Maternity Ward]: 4 beds, 2 free, PKR 6,500/day | Isolation Ward [Isolation Room]: 2 beds, 1 free, PKR 25,000/day"
+    },
+    {
+      "id": "HYD-020",
+      "name": "Al Shifa Eye Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Ophthalmology",
+        "Oncology",
+        "Orthopedics",
+        "Dermatology",
+        "Nephrology & Urology"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Al Shifa Eye Hospital, Unit No.6, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.371921,
+      "longitude": 68.348593,
+      "phone": "0306 3081188",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 23,
+      "occupiedBedsReported": 14,
+      "availableBedsReported": 8,
+      "occupancyPctReported": 60.9,
+      "resources": {
+        "generalBeds": {
+          "total": 21,
+          "occupied": 13,
+          "unavailable": 1,
+          "available": 7
+        },
+        "emergencyBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 3,
+          "occupied": 1,
+          "unavailable": 1,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 18000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 6 beds, 1 free, PKR 3,000/day | Female General Ward [General Ward]: 6 beds, 2 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 2 free, PKR 7,500/day | Private Rooms [Private Room]: 4 beds, 2 free, PKR 10,000/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 18,000/day | Emergency Department [Emergency Bay]: 2 beds, 1 free, PKR 5,500/day"
+    },
+    {
+      "id": "HYD-021",
+      "name": "Shakir Hussain Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Gynecology & Obstetrics",
+        "Psychiatry",
+        "Nephrology & Urology",
+        "Dermatology"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Shakir Hussain Hospital, Wazir Xray, Main Doctor Liner,, Saddar, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.400048,
+      "longitude": 68.361548,
+      "phone": "3003044296",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 22,
+      "occupiedBedsReported": 12,
+      "availableBedsReported": 10,
+      "occupancyPctReported": 54.5,
+      "resources": {
+        "generalBeds": {
+          "total": 18,
+          "occupied": 10,
+          "unavailable": 0,
+          "available": 8
+        },
+        "emergencyBeds": {
+          "total": 4,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 2
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 3500,
+      "maxDailyChargePKR": 8500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 5 beds, 2 free, PKR 3,500/day | Female General Ward [General Ward]: 5 beds, 2 free, PKR 3,500/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 6,500/day | Private Rooms [Private Room]: 3 beds, 1 free, PKR 8,500/day | Maternity / Gynae Ward [Maternity Ward]: 3 beds, 2 free, PKR 7,000/day | Emergency Department [Emergency Bay]: 4 beds, 2 free, PKR 5,500/day"
+    },
+    {
+      "id": "HYD-022",
+      "name": "Sehat Maternity And Child Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Pediatrics",
+        "Gynecology & Obstetrics",
+        "Surgery",
+        "Pulmonology",
+        "Neurology"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Sehat Maternity And Child Hospital, Abdullah Sports City Qasimabad, (Opposite Police Station Defence A On Ghazi Road), Hyderabad, Sindh, Pakistan",
+      "latitude": 25.418646,
+      "longitude": 68.331103,
+      "phone": "3337061260",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 22,
+      "occupiedBedsReported": 21,
+      "availableBedsReported": 0,
+      "occupancyPctReported": 95.5,
+      "resources": {
+        "generalBeds": {
+          "total": 20,
+          "occupied": 19,
+          "unavailable": 1,
+          "available": 0
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 13000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 5 beds, 0 free, PKR 2,000/day | Female General Ward [General Ward]: 5 beds, 0 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 0 free, PKR 4,500/day | Private Rooms [Private Room]: 3 beds, 0 free, PKR 13,000/day | Pediatric Ward [Pediatric Ward]: 2 beds, 0 free, PKR 4,000/day | Maternity / Gynae Ward [Maternity Ward]: 3 beds, 0 free, PKR 5,000/day | Isolation Ward [Isolation Room]: 2 beds, 0 free, PKR 16,500/day"
+    },
+    {
+      "id": "HYD-023",
+      "name": "Shafay Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Ophthalmology",
+        "Nephrology & Urology",
+        "Psychiatry"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Shafay Hospital, Nasim Nagar Rd, Qasimabad, Qasimabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.415534,
+      "longitude": 68.331201,
+      "phone": "(022) 2652104",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 21,
+      "occupiedBedsReported": 12,
+      "availableBedsReported": 9,
+      "occupancyPctReported": 57.1,
+      "resources": {
+        "generalBeds": {
+          "total": 21,
+          "occupied": 12,
+          "unavailable": 0,
+          "available": 9
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 21500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 6 beds, 2 free, PKR 2,500/day | Female General Ward [General Ward]: 6 beds, 3 free, PKR 3,500/day | Semi-Private Rooms [Semi-Private Room]: 4 beds, 2 free, PKR 5,500/day | Private Rooms [Private Room]: 4 beds, 2 free, PKR 9,500/day | Deluxe Rooms [Deluxe Room]: 1 beds, 0 free, PKR 21,500/day"
+    },
+    {
+      "id": "HYD-024",
+      "name": "I.R Medicare Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Gastroenterology",
+        "Diabetes & Endocrinology",
+        "ENT"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "I.R Medicare Hospital, Unit 6 Latifabad Near Red Cresent General Hospital, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.373214,
+      "longitude": 68.345525,
+      "phone": "223402212",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": false,
+      "totalBedsReported": 20,
+      "occupiedBedsReported": 13,
+      "availableBedsReported": 6,
+      "occupancyPctReported": 65,
+      "resources": {
+        "generalBeds": {
+          "total": 15,
+          "occupied": 9,
+          "unavailable": 0,
+          "available": 6
+        },
+        "emergencyBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 1,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 9500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 5 beds, 2 free, PKR 2,500/day | Female General Ward [General Ward]: 5 beds, 2 free, PKR 3,500/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 7,500/day | Private Rooms [Private Room]: 3 beds, 1 free, PKR 9,500/day | Emergency Department [Emergency Bay]: 3 beds, 0 free, PKR 4,000/day | Isolation Ward [Isolation Room]: 2 beds, 0 free, PKR 25,000/day"
+    },
+    {
+      "id": "HYD-025",
+      "name": "Bhittai Hospital Hyderabad",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Neurology",
+        "Gynecology & Obstetrics",
+        "Diabetes & Endocrinology"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Bhittai Hospital Hyderabad, Unit No 4, Latifabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.373755,
+      "longitude": 68.347144,
+      "phone": "229260294",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 19,
+      "occupiedBedsReported": 11,
+      "availableBedsReported": 8,
+      "occupancyPctReported": 57.9,
+      "resources": {
+        "generalBeds": {
+          "total": 16,
+          "occupied": 9,
+          "unavailable": 0,
+          "available": 7
+        },
+        "emergencyBeds": {
+          "total": 3,
+          "occupied": 2,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 2,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 2
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 9500,
+      "verificationLabelInSource": "Verified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 4 beds, 2 free, PKR 2,500/day | Female General Ward [General Ward]: 4 beds, 2 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 7,500/day | Private Rooms [Private Room]: 3 beds, 1 free, PKR 9,500/day | Maternity / Gynae Ward [Maternity Ward]: 3 beds, 1 free, PKR 4,000/day | Emergency Department [Emergency Bay]: 3 beds, 1 free, PKR 4,500/day"
+    },
+    {
+      "id": "HYD-026",
+      "name": "Dr Abdul Salam Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "ENT"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Dr Abdul Salam Hospital, Behind Meezan Bank Jamia Masjid Road Saddar, Hyderabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.391738,
+      "longitude": 68.356628,
+      "phone": "3003057055",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 14,
+      "occupiedBedsReported": 8,
+      "availableBedsReported": 6,
+      "occupancyPctReported": 57.1,
+      "resources": {
+        "generalBeds": {
+          "total": 11,
+          "occupied": 6,
+          "unavailable": 0,
+          "available": 5
+        },
+        "emergencyBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 2500,
+      "maxDailyChargePKR": 9000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 4 beds, 2 free, PKR 2,500/day | Female General Ward [General Ward]: 3 beds, 1 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 4,500/day | Private Rooms [Private Room]: 2 beds, 1 free, PKR 9,000/day | Emergency Department [Emergency Bay]: 2 beds, 1 free, PKR 2,500/day | Intensive Care Unit (ICU) [ICU Cubicle]: 1 beds, 0 free, PKR 33,000/day"
+    },
+    {
+      "id": "HYD-027",
+      "name": "Bone & Joint Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Orthopedics",
+        "Nephrology & Urology",
+        "Oncology",
+        "Neurology"
+      ],
+      "city": "Hyderabad",
+      "area": "Autobhan Road",
+      "address": "Bone & Joint Hospital, Besides Ok Roll Point, Autobhan Road, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.369531,
+      "longitude": 68.377076,
+      "phone": "4232591427",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 13,
+      "occupiedBedsReported": 6,
+      "availableBedsReported": 7,
+      "occupancyPctReported": 46.2,
+      "resources": {
+        "generalBeds": {
+          "total": 13,
+          "occupied": 6,
+          "unavailable": 0,
+          "available": 7
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 1500,
+      "maxDailyChargePKR": 10500,
+      "verificationLabelInSource": "Unverified",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 4 beds, 2 free, PKR 1,500/day | Female General Ward [General Ward]: 4 beds, 2 free, PKR 3,000/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 7,500/day | Private Rooms [Private Room]: 3 beds, 2 free, PKR 10,500/day"
+    },
+    {
+      "id": "HYD-028",
+      "name": "Umme-Majida Reproductive Center And Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Surgery",
+        "Pediatrics",
+        "Oncology",
+        "Diabetes & Endocrinology"
+      ],
+      "city": "Hyderabad",
+      "area": "Latifabad",
+      "address": "Umme-Majida Reproductive Center And Hospital, Near Hilal-E-Ahmar Hospital, Bangla No. 391-D, Latifabad Unit # 6, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.376815,
+      "longitude": 68.353532,
+      "phone": "3173020221",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": true,
+      "totalBedsReported": 13,
+      "occupiedBedsReported": 4,
+      "availableBedsReported": 9,
+      "occupancyPctReported": 30.8,
+      "resources": {
+        "generalBeds": {
+          "total": 13,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 9
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 1500,
+      "maxDailyChargePKR": 10000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 4 beds, 3 free, PKR 2,500/day | Female General Ward [General Ward]: 4 beds, 3 free, PKR 1,500/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 1 free, PKR 5,500/day | Private Rooms [Private Room]: 3 beds, 2 free, PKR 10,000/day"
+    },
+    {
+      "id": "HYD-029",
+      "name": "Ghani Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Diabetes & Endocrinology",
+        "Oncology"
+      ],
+      "city": "Hyderabad",
+      "area": "Qasimabad",
+      "address": "Ghani Hospital, Nh 5, Qasimabad, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.423151,
+      "longitude": 68.327297,
+      "phone": "(022) 2653376",
+      "open24x7": false,
+      "emergencyAvailable": false,
+      "hasAmbulance": false,
+      "totalBedsReported": 13,
+      "occupiedBedsReported": 11,
+      "availableBedsReported": 2,
+      "occupancyPctReported": 84.6,
+      "resources": {
+        "generalBeds": {
+          "total": 11,
+          "occupied": 10,
+          "unavailable": 0,
+          "available": 1
+        },
+        "emergencyBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 0
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 14000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 4 beds, 1 free, PKR 3,000/day | Female General Ward [General Ward]: 3 beds, 0 free, PKR 2,000/day | Semi-Private Rooms [Semi-Private Room]: 2 beds, 0 free, PKR 8,000/day | Private Rooms [Private Room]: 2 beds, 0 free, PKR 14,000/day | Isolation Ward [Isolation Room]: 2 beds, 1 free, PKR 14,500/day"
+    },
+    {
+      "id": "HYD-030",
+      "name": "Dr Manzoor Ali Jamal Hospital",
+      "facilityType": "Hospital",
+      "ownership": "Private",
+      "specialties": [
+        "General Medicine",
+        "Neurology",
+        "ENT",
+        "Gastroenterology",
+        "Surgery"
+      ],
+      "city": "Hyderabad",
+      "area": "Saddar",
+      "address": "Dr Manzoor Ali Jamal Hospital, 1St Floor, Quaid-E-Azam Complex, Doctors Lane, Saddar, Hyderabad, Sindh, Pakistan",
+      "latitude": 25.398629,
+      "longitude": 68.367391,
+      "phone": "3334963337",
+      "open24x7": true,
+      "emergencyAvailable": true,
+      "hasAmbulance": true,
+      "totalBedsReported": 10,
+      "occupiedBedsReported": 5,
+      "availableBedsReported": 5,
+      "occupancyPctReported": 50,
+      "resources": {
+        "generalBeds": {
+          "total": 8,
+          "occupied": 4,
+          "unavailable": 0,
+          "available": 4
+        },
+        "emergencyBeds": {
+          "total": 2,
+          "occupied": 1,
+          "unavailable": 0,
+          "available": 1
+        },
+        "icuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "nicuBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ventilators": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "operationTheatres": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "isolationBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "dialysisMachines": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "traumaBeds": {
+          "total": 0,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 0
+        },
+        "ambulances": {
+          "total": 1,
+          "occupied": 0,
+          "unavailable": 0,
+          "available": 1
+        }
+      },
+      "minDailyChargePKR": 2000,
+      "maxDailyChargePKR": 10000,
+      "verificationLabelInSource": "Pending",
+      "accountStatusInSource": "Active",
+      "sourceClaim": "original_hyderabad",
+      "wardsAndRoomsDetail": "Male General Ward [General Ward]: 3 beds, 1 free, PKR 2,000/day | Female General Ward [General Ward]: 2 beds, 1 free, PKR 2,500/day | Semi-Private Rooms [Semi-Private Room]: 1 beds, 1 free, PKR 7,000/day | Private Rooms [Private Room]: 2 beds, 1 free, PKR 10,000/day | Emergency Department [Emergency Bay]: 2 beds, 1 free, PKR 5,500/day"
+    }
+  ]
+}
