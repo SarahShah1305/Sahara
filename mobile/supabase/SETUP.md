@@ -15,7 +15,7 @@ The app uses Supabase Auth for email/password accounts. A new account is always 
    npx expo start --tunnel --clear
    ```
 
-6. Create a patient account with a valid email, Pakistani mobile number and matching passwords. Confirm the email link, then sign in with email and password.
+6. In Supabase Authentication settings, keep email sign-ups enabled and turn off email confirmation for the hackathon prototype. Create an account with a valid email, Pakistani mobile number and matching passwords; with confirmation disabled, the new account should sign in immediately.
 
 Until these steps are done, the app validates the form but explicitly tells the user that the account was not saved.
 
