@@ -13,7 +13,7 @@ export type ResourceRequest = {
   id: string; user_id: string; requester_name: string; requester_phone: string | null;
   requester_email: string | null; requester_role: string; request_kind: 'bed' | 'referral';
   hospital_id: string; hospital_name: string; resource_type: string; reason: string;
-  amount_pkr: number | null; status: string; created_at: string; updated_at: string; duplicate_hidden?: boolean;
+  amount_pkr: number | null; requested_for: string | null; status: string; created_at: string; updated_at: string; duplicate_hidden?: boolean;
 };
 export type HospitalReview = { verification_status: string; account_status: string; admin_note: string; reviewed_at: string | null };
 
@@ -80,7 +80,7 @@ export default function DashboardScreen(props: Props) {
   }), [hospitalQuery, hospitalReviews, adminFilter, role]);
 
   const selectedHospital = hospitalDataset.records.find(hospital => hospital.id === staffHospitalId) ?? hospitalDataset.records[0];
-  const pendingRequests = requests.filter(request => request.status === 'pending');
+  const pendingRequests = requests.filter(request => request.status === 'pending' && request.hospital_id === staffHospitalId);
   const pendingTotal = requests.filter(request => request.status === 'pending').length;
   const availableEmergency = hospitalDataset.records.reduce((sum, hospital) => sum + (capacity[hospital.id]?.emergency_bed?.available ?? hospital.resources.emergencyBeds.available), 0);
   const emergencyHospitals = hospitalDataset.records.filter(hospital => (capacity[hospital.id]?.emergency_bed?.available ?? hospital.resources.emergencyBeds.available) > 0);
@@ -132,9 +132,9 @@ export default function DashboardScreen(props: Props) {
         </View>
       </View>
 
-      <View style={s.sectionHead}><Text style={s.sectionTitle}>Incoming requests · all hospitals</Text><View style={s.requestHeaderActions}><Text style={s.countBadge}>{pendingRequests.length} pending</Text><TouchableOpacity onPress={onRefreshRequests} disabled={requestRefreshing} style={s.refreshButton}><Text style={s.refreshButtonText}>{requestRefreshing ? 'Refreshing…' : 'Refresh'}</Text></TouchableOpacity></View></View>
+      <View style={s.sectionHead}><Text style={s.sectionTitle}>Incoming requests · selected hospital</Text><View style={s.requestHeaderActions}><Text style={s.countBadge}>{pendingRequests.length} pending</Text><TouchableOpacity onPress={onRefreshRequests} disabled={requestRefreshing} style={s.refreshButton}><Text style={s.refreshButtonText}>{requestRefreshing ? 'Refreshing…' : 'Refresh'}</Text></TouchableOpacity></View></View>
       {!!requestSyncMessage && <View style={s.syncNotice}><Text style={s.syncNoticeText}>{requestSyncMessage}</Text></View>}
-      {pendingRequests.length === 0 && <View style={s.empty}><Text style={s.emptyTitle}>No requests waiting</Text><Text style={s.muted}>New bed and referral requests for this hospital appear here.</Text></View>}
+      {pendingRequests.length === 0 && <View style={s.empty}><Text style={s.emptyTitle}>No requests waiting</Text><Text style={s.muted}>Requests for {selectedHospital.name} appear here. Check the selected hospital above and refresh.</Text></View>}
       {pendingRequests.map(request => <RequestCard key={request.id} request={request}
         onAccept={() => onReviewRequest(request.id, true)} onReject={() => onReviewRequest(request.id, false)} />)}
       <View style={s.sectionHead}><Text style={s.sectionTitle}>Recent appointments</Text><Text style={s.sectionMeta}>{appointments.filter(a => a.hospital_id === staffHospitalId).length}</Text></View>
@@ -230,6 +230,7 @@ function RequestCard({ request, onAccept, onReject, onConfirmTransfer }: {
     {!!request.requester_phone && <Text style={s.detailLine}>Phone: {request.requester_phone}</Text>}
     {!!request.requester_email && <Text style={s.detailLine}>Email: {request.requester_email}</Text>}
     {!!request.reason && <Text style={s.detailLine}>Note: {request.reason}</Text>}
+    {!!request.requested_for && <Text style={s.detailLine}>Requested for {displayTime(request.requested_for)}</Text>}
     {request.amount_pkr != null && <Text style={s.detailLine}>Estimated amount: PKR {request.amount_pkr.toLocaleString()} / day</Text>}
     <Text style={s.muted}>Submitted {displayTime(request.created_at)}</Text>
     {request.status === 'pending' && onAccept && onReject && <View style={s.buttonRow}>
@@ -244,7 +245,7 @@ function AppointmentCard({ appointment }: { appointment: AppointmentRecord }) {
   const hospital = hospitalDataset.records.find(item => item.id === appointment.hospital_id);
   return <View style={s.card}>
     <View style={[s.rowBetween,s.requestCardHeader]}><Text style={[s.cardTitle,s.hospitalTitle]} numberOfLines={2}>{hospital?.name ?? appointment.hospital_id}</Text><Text style={[s.status,s.statusText,s.statusDone]}>Confirmed</Text></View>
-    <Text style={s.muted}>{appointment.specialty} · {appointment.doctor_name}</Text>
+    <Text style={s.muted}>{appointment.specialty} · {appointment.doctor_name.toLowerCase().startsWith('dr. demo') ? 'To be assigned' : appointment.doctor_name}</Text>
     <Text style={s.detailLine}>Appointment: {displayTime(appointment.appointment_at)}</Text>
     <Text style={s.detailLine}>Care: {appointment.care_type}</Text>
     {appointment.amount_pkr != null && <Text style={s.detailLine}>Estimated amount: PKR {appointment.amount_pkr.toLocaleString()} / day</Text>}

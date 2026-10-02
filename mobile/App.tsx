@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Keyboard, KeyboardAvoidingView, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useAudioPlayer } from 'expo-audio';
@@ -42,6 +42,14 @@ function roleLabel(value: unknown): DemoRole { if (value === 'administrator') re
 function pickerValue(day: string, time: string) { return new Date(`${day}T${time}:00+05:00`); }
 function pakistanDate(value: Date) { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Karachi',year:'numeric',month:'2-digit',day:'2-digit'}).format(value); }
 function pakistanTime(value: Date) { return new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Karachi',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(value); }
+function ScheduleDatePicker({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  if (Platform.OS === 'web') return React.createElement('input' as any, { type: 'date', value, min: pakistanDate(new Date()), onChange: (event: any) => onChange(event.target.value), style: { width: '100%', height: 46, border: '1px solid #E3EBE7', borderRadius: 11, background: '#fff', color: '#294A41', padding: '0 12px', fontSize: 14, boxSizing: 'border-box' } });
+  return <DateTimePicker value={pickerValue(value, '10:00')} mode="date" display={Platform.OS==='ios'?'inline':'calendar'} minimumDate={new Date()} timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)onChange(pakistanDate(date));}} />;
+}
+function ScheduleTimePicker({ day, value, onChange }: { day: string; value: string; onChange: (value: string) => void }) {
+  if (Platform.OS === 'web') return React.createElement('input' as any, { type: 'time', value, onChange: (event: any) => onChange(event.target.value), style: { width: '100%', height: 46, border: '1px solid #E3EBE7', borderRadius: 11, background: '#fff', color: '#294A41', padding: '0 12px', fontSize: 14, boxSizing: 'border-box' } });
+  return <DateTimePicker value={pickerValue(day,value)} mode="time" display="spinner" minuteInterval={15} is24Hour={false} locale="en-US" timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)onChange(pakistanTime(date));}} />;
+}
 
 export default function App() {
   const confirmationPlayer = useAudioPlayer(require('./assets/confirmation.wav'));
@@ -85,6 +93,10 @@ export default function App() {
   const [requestResource, setRequestResource] = useState('general_bed');
   const [requestKind, setRequestKind] = useState<'bed'|'referral'>('bed');
   const [requestReason, setRequestReason] = useState('');
+  const [requestSent, setRequestSent] = useState(false);
+  const [requestSubmitError, setRequestSubmitError] = useState('');
+  const [requestDay, setRequestDay] = useState(nextDays()[1].value);
+  const [requestTime, setRequestTime] = useState('10:00');
   const [requestBusy, setRequestBusy] = useState(false);
   const requestInputRef = useRef<TextInput>(null);
   const requestSubmissionInFlight = useRef(false);
@@ -166,7 +178,7 @@ export default function App() {
     }
     const { data: appointmentRows } = await supabase.from('sahara_appointments').select('id,user_id,hospital_id,care_type,specialty,doctor_name,appointment_at,amount_pkr,status,created_at').order('created_at',{ascending:false}).limit(100);
     if (appointmentRows) setAppointments(appointmentRows as AppointmentRecord[]);
-    const { data: requests, error: requestsError } = await supabase.from('sahara_resource_requests').select('id,user_id,requester_name,requester_phone,requester_email,requester_role,request_kind,hospital_id,hospital_name,resource_type,reason,amount_pkr,status,created_at,updated_at,duplicate_hidden').order('created_at',{ascending:false}).limit(100);
+    const { data: requests, error: requestsError } = await supabase.from('sahara_resource_requests').select('id,user_id,requester_name,requester_phone,requester_email,requester_role,request_kind,hospital_id,hospital_name,resource_type,reason,amount_pkr,requested_for,status,created_at,updated_at,duplicate_hidden').order('created_at',{ascending:false}).limit(100);
     if (requestsError) setRequestSyncMessage('Could not load requests. Check your connection and Supabase setup, then refresh.');
     else { setResourceRequests(((requests ?? []) as ResourceRequest[]).filter(request => !request.duplicate_hidden)); setRequestSyncMessage(''); }
     const { data: reviews } = await supabase.from('sahara_hospitals').select('hospital_id,verification_status,account_status,admin_note,reviewed_at');
@@ -200,6 +212,10 @@ export default function App() {
     setRequestResource(resource);
     setRequestKind(kind);
     setRequestReason(initialReason);
+    setRequestSent(false);
+    setRequestSubmitError('');
+    setRequestDay(nextDays()[1].value);
+    setRequestTime('10:00');
     setRequestOpen(true);
   }
 
@@ -207,7 +223,7 @@ export default function App() {
     if (!supabase || !userId || !bookingHospital) { Alert.alert('Sign in required','Sign in to save this appointment.'); return; }
     setBookingBusy(true); setConfirmationStep('checking'); setConfirmationError(''); setAppointmentOpen(false); setConfirmationOpen(true);
     const chosenSpecialty = canonicalSpecialty(specialtyQuery || 'General Medicine');
-    const doctorName = `Dr. Demo ${chosenSpecialty}`;
+    const doctorName = 'To be assigned';
     const at = pickerValue(appointmentDay, appointmentTime).toISOString();
     const when = at;
     const bookedAt = new Date().toISOString();
@@ -238,6 +254,7 @@ export default function App() {
     if (requestSubmissionInFlight.current) return;
     requestSubmissionInFlight.current = true;
     setRequestBusy(true);
+    setRequestSubmitError('');
     const amount = requestHospital.minDailyChargePKR ?? null;
     try {
       const { error } = await supabase.rpc('create_sahara_resource_request', {
@@ -247,14 +264,17 @@ export default function App() {
         p_request_kind: requestKind,
         p_reason: requestReason.trim(),
         p_amount_pkr: amount,
+        p_requested_for: pickerValue(requestDay, requestTime).toISOString(),
       });
       if (error) throw error;
-      Keyboard.dismiss();
-      setRequestOpen(false);
       await refreshDemoData();
-      Alert.alert(requestKind === 'referral' ? 'Referral sent' : 'Request sent', 'The hospital can now review this request.');
-    } catch {
-      Alert.alert('Request could not be sent','Check your connection and confirm the latest Sahara database migrations have run in Supabase.');
+      Keyboard.dismiss();
+      setRequestSent(true);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '';
+      setRequestSubmitError(message.toLowerCase().includes('create_sahara_resource_request') || message.toLowerCase().includes('requested_for')
+        ? 'The database needs the latest request migration. Run mobile/supabase/migrations/202610020007_request_scheduling.sql in the Supabase SQL Editor, then try again.'
+        : message || 'Check your connection and try again.');
     } finally {
       requestSubmissionInFlight.current = false;
       setRequestBusy(false);
@@ -333,7 +353,7 @@ export default function App() {
           <Text style={s.sectionTitle}>My appointments</Text>
           {appointments.filter(item=>item.user_id===userId).length===0 ? <View style={s.emptyCard}><Text style={s.emptyTitle}>No appointments yet</Text><Text style={s.emptyText}>Your confirmed appointments will appear here.</Text></View> : appointments.filter(item=>item.user_id===userId).map(item=><TouchableOpacity key={item.id} style={s.hospitalCard} onPress={()=>setAppointmentDetail(item)}><View style={s.rowBetween}><Text numberOfLines={2} style={[s.hospitalName,{flex:1,minWidth:0}]}>{hospitalDataset.records.find(h=>h.id===item.hospital_id)?.name ?? item.hospital_id}</Text><Text style={[s.serviceTag,{flexShrink:0}]}>CONFIRMED</Text></View><Text style={s.hospitalArea}>{item.care_type} · {item.specialty} · {new Date(item.appointment_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text><Text style={s.backText}>View appointment details →</Text></TouchableOpacity>)}
           <Text style={s.sectionTitle}>My bed and room requests</Text>
-          {resourceRequests.filter(item=>item.user_id===userId&&item.request_kind==='bed'&&!item.duplicate_hidden).length===0 ? <View style={s.emptyCard}><Text style={s.emptyTitle}>No bed requests yet</Text><Text style={s.emptyText}>Requests are sent to the selected hospital for staff review.</Text></View> : resourceRequests.filter(item=>item.user_id===userId&&item.request_kind==='bed'&&!item.duplicate_hidden).map(item=><View key={item.id} style={s.hospitalCard}><View style={s.rowBetween}><Text numberOfLines={2} style={[s.hospitalName,{flex:1,minWidth:0}]}>{item.hospital_name}</Text><Text style={[s.serviceTag,s.requestStatusTag,item.status==='pending'&&s.pendingTag]}>{item.status.replace('_',' ').toUpperCase()}</Text></View><Text style={s.hospitalArea}>{item.resource_type.replaceAll('_',' ')} · Requested {new Date(item.created_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text>{item.amount_pkr!==null&&<Text style={s.hospitalArea}>Estimated amount: PKR {item.amount_pkr.toLocaleString()} / day</Text>}{item.status!=='pending'&&<Text style={s.hospitalArea}>Reviewed: {new Date(item.updated_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}{item.status==='accepted'?' · Bed/room accepted':''}</Text>}</View>)}
+          {resourceRequests.filter(item=>item.user_id===userId&&item.request_kind==='bed'&&!item.duplicate_hidden).length===0 ? <View style={s.emptyCard}><Text style={s.emptyTitle}>No bed requests yet</Text><Text style={s.emptyText}>Requests are sent to the selected hospital for staff review.</Text></View> : resourceRequests.filter(item=>item.user_id===userId&&item.request_kind==='bed'&&!item.duplicate_hidden).map(item=><View key={item.id} style={s.hospitalCard}><View style={s.rowBetween}><Text numberOfLines={2} style={[s.hospitalName,{flex:1,minWidth:0}]}>{item.hospital_name}</Text><Text style={[s.serviceTag,s.requestStatusTag,item.status==='pending'&&s.pendingTag]}>{item.status.replace('_',' ').toUpperCase()}</Text></View><Text style={s.hospitalArea}>{item.resource_type.replaceAll('_',' ')} · Requested {new Date(item.created_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text>{item.requested_for&&<Text style={s.hospitalArea}>Requested for: {new Date(item.requested_for).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text>}{item.amount_pkr!==null&&<Text style={s.hospitalArea}>Estimated amount: PKR {item.amount_pkr.toLocaleString()} / day</Text>}{item.status!=='pending'&&<Text style={s.hospitalArea}>Reviewed: {new Date(item.updated_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}{item.status==='accepted'?' · Bed/room accepted':''}</Text>}</View>)}
         </>}
 
         {screen === 'dashboard' && <DashboardScreen
@@ -402,8 +422,8 @@ export default function App() {
         <View style={s.modalBackdrop}><View style={s.staffModal}>
           <Text style={s.resultsTitle}>Book appointment</Text>
           <Text style={s.modalHint}>{bookingHospital?.name} · {specialtyQuery.trim() || need}</Text>
-          <Text style={s.label}>PICK ANY DATE</Text><View style={s.calendarPicker}><DateTimePicker value={pickerValue(appointmentDay,appointmentTime)} mode="date" display={Platform.OS==='ios'?'inline':'calendar'} minimumDate={new Date()} timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)setAppointmentDay(pakistanDate(date));}} /></View>
-          <Text style={[s.label,{marginTop:12}]}>PICK A TIME · SCROLL</Text><View style={s.timePicker}><DateTimePicker value={pickerValue(appointmentDay,appointmentTime)} mode="time" display="spinner" minuteInterval={15} is24Hour={false} locale="en-US" timeZoneName="Asia/Karachi" onChange={(event:DateTimePickerEvent,date?:Date)=>{if(event.type==='set'&&date)setAppointmentTime(pakistanTime(date));}} /></View>
+          <Text style={s.label}>PICK ANY DATE</Text><View style={s.calendarPicker}><ScheduleDatePicker value={appointmentDay} onChange={setAppointmentDay} /></View>
+          <Text style={[s.label,{marginTop:12}]}>PICK A TIME · SCROLL</Text><View style={s.timePicker}><ScheduleTimePicker day={appointmentDay} value={appointmentTime} onChange={setAppointmentTime} /></View>
           <Text style={s.smallNote}>An appointment is confirmed immediately. Bed and room availability is handled separately through a request to hospital staff. Estimated starting price: {bookingHospital?.minDailyChargePKR ? `PKR ${bookingHospital.minDailyChargePKR.toLocaleString()} / day` : 'not listed'}.</Text>
           <TouchableOpacity disabled={bookingBusy} onPress={confirmBooking} style={s.searchButton}><Text style={s.searchText}>{bookingBusy?'Confirming…':'Confirm appointment'}</Text></TouchableOpacity>
           <TouchableOpacity onPress={()=>setAppointmentOpen(false)} style={s.cancelButton}><Text style={s.cancelText}>Cancel</Text></TouchableOpacity>
@@ -418,21 +438,26 @@ export default function App() {
         <View style={s.modalBackdrop}><KeyboardAvoidingView style={s.requestKeyboardAvoider} behavior={Platform.OS==='ios'?'padding':'height'}>
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={s.requestModalScroll}>
         <View style={[s.staffModal,s.requestModal]}>
-          <Text style={s.resultsTitle}>{requestKind==='referral'?'Send emergency referral':'Request bed or room'}</Text>
+          <Text style={s.resultsTitle}>{requestSent ? (requestKind==='referral'?'Referral sent':'Request sent') : requestKind==='referral'?'Send emergency referral':'Request bed or room'}</Text>
           <Text style={s.modalHint}>{requestHospital?.name} · {requestResource.replaceAll('_',' ')}</Text>
+          {requestSent ? <><View style={s.confirmCheck}><Text style={s.confirmCheckText}>✓</Text></View><Text style={s.confirmText}>{requestKind==='referral'?'The referral is in this hospital’s staff request queue.':'The request is in this hospital’s staff request queue.'} The hospital can now review it.</Text><TouchableOpacity onPress={()=>setRequestOpen(false)} style={s.searchButton}><Text style={s.searchText}>Done</Text></TouchableOpacity></> : <>
           <Text style={s.smallNote}>Hospital staff will review this request. Capacity changes only if the request is accepted.</Text>
+          <Text style={s.label}>PICK REQUEST DATE</Text><View style={s.calendarPicker}><ScheduleDatePicker value={requestDay} onChange={setRequestDay} /></View>
+          <Text style={[s.label,{marginTop:12}]}>PICK REQUEST TIME · SCROLL</Text><View style={s.timePicker}><ScheduleTimePicker day={requestDay} value={requestTime} onChange={setRequestTime} /></View>
           <Text style={s.label}>REQUEST DETAILS (OPTIONAL)</Text>
           <TextInput ref={requestInputRef} value={requestReason} onChangeText={setRequestReason} style={[s.largeInput,{minHeight:76,paddingTop:12}]} multiline blurOnSubmit returnKeyType="done" onSubmitEditing={()=>Keyboard.dismiss()} placeholder="Add a short note for hospital staff" />
           <TouchableOpacity onPress={()=>{Keyboard.dismiss();requestInputRef.current?.blur();}} style={s.keyboardDone}><Text style={s.keyboardDoneText}>Done typing · hide keyboard</Text></TouchableOpacity>
           <Text style={s.smallNote}>Estimated amount: {requestHospital?.minDailyChargePKR ? `PKR ${requestHospital.minDailyChargePKR.toLocaleString()} / day` : 'not listed'}.</Text>
           <TouchableOpacity disabled={requestBusy} onPress={()=>{Keyboard.dismiss();requestInputRef.current?.blur();void submitResourceRequest();}} style={s.searchButton}><Text style={s.searchText}>{requestBusy?'Sending…':'Send request to hospital'}</Text></TouchableOpacity>
+          {!!requestSubmitError&&<View style={s.requestError}><Text style={s.requestErrorText}>{requestSubmitError}</Text></View>}
           <TouchableOpacity onPress={()=>setRequestOpen(false)} style={s.cancelButton}><Text style={s.cancelText}>Cancel</Text></TouchableOpacity>
+          </>}
         </View></ScrollView></KeyboardAvoidingView></View>
       </Modal>
       <Modal visible={appointmentDetail!==null} transparent animationType="fade" onRequestClose={()=>setAppointmentDetail(null)}>
         <View style={s.confirmBackdrop}><View style={s.confirmCard}>
           <Text style={s.confirmTitle}>Appointment details</Text>
-          {appointmentDetail&&<Text style={s.confirmText}>{hospitalDataset.records.find(h=>h.id===appointmentDetail.hospital_id)?.name??appointmentDetail.hospital_id}\nFor: {appointmentDetail.care_type} · {appointmentDetail.specialty}\nDoctor: {appointmentDetail.doctor_name}\nDate and time: {new Date(appointmentDetail.appointment_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}\nAmount: {appointmentDetail.amount_pkr!==null?`PKR ${appointmentDetail.amount_pkr.toLocaleString()} / day`:'Not listed'}\nBooked at: {new Date(appointmentDetail.created_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text>}
+          {appointmentDetail&&<Text style={s.confirmText}>{hospitalDataset.records.find(h=>h.id===appointmentDetail.hospital_id)?.name??appointmentDetail.hospital_id}\nFor: {appointmentDetail.care_type} · {appointmentDetail.specialty}\nDoctor: {appointmentDetail.doctor_name.toLowerCase().startsWith('dr. demo')?'To be assigned':appointmentDetail.doctor_name}\nDate and time: {new Date(appointmentDetail.appointment_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}\nAmount: {appointmentDetail.amount_pkr!==null?`PKR ${appointmentDetail.amount_pkr.toLocaleString()} / day`:'Not listed'}\nBooked at: {new Date(appointmentDetail.created_at).toLocaleString('en-PK',{timeZone:'Asia/Karachi',dateStyle:'medium',timeStyle:'short'})}</Text>}
           <TouchableOpacity style={s.searchButton} onPress={()=>setAppointmentDetail(null)}><Text style={s.searchText}>Close details</Text></TouchableOpacity>
         </View></View>
       </Modal>
@@ -442,7 +467,7 @@ export default function App() {
 
 const s = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#F5F8F6' }, page: { paddingHorizontal: 22, paddingTop: 10, paddingBottom: 34 },
-  requestKeyboardAvoider: { width: '100%', maxHeight: '92%' }, requestModalScroll: { flexGrow: 1, justifyContent: 'flex-end' }, requestModal: { paddingBottom: 18 }, keyboardDone: { alignSelf: 'flex-end', paddingVertical: 8, paddingHorizontal: 10 }, keyboardDoneText: { color: '#176A54', fontSize: 10, fontWeight: '800' },
+  requestKeyboardAvoider: { width: '100%', maxHeight: '92%' }, requestModalScroll: { flexGrow: 1, justifyContent: 'flex-end' }, requestModal: { paddingBottom: 18 }, requestError: { marginTop: 10, borderRadius: 10, padding: 11, backgroundColor: '#FFF0EC' }, requestErrorText: { color: '#A33A2B', fontSize: 11, lineHeight: 16 }, keyboardDone: { alignSelf: 'flex-end', paddingVertical: 8, paddingHorizontal: 10 }, keyboardDoneText: { color: '#176A54', fontSize: 10, fontWeight: '800' },
   loadingText: { color: '#176A54', textAlign: 'center', marginTop: 100, fontWeight: '700' }, staffAccessButton: { backgroundColor: '#EAF5F0', padding: 12, borderRadius: 12, marginBottom: 15 }, staffAccessText: { color: '#176A54', fontSize: 11, fontWeight: '800', textAlign: 'center' }, modalBackdrop: { flex: 1, backgroundColor: 'rgba(13, 35, 28, 0.5)', justifyContent: 'flex-end' }, staffModal: { backgroundColor: '#F8FAF8', borderTopLeftRadius: 24, borderTopRightRadius: 24, padding: 22, paddingBottom: 34 }, modalHint: { color: '#71827A', fontSize: 11, lineHeight: 16, marginTop: 6, marginBottom: 14 }, roleTabs: { flexDirection: 'row', gap: 8 }, roleTab: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 10, backgroundColor: '#E9EFEC' }, roleTabActive: { backgroundColor: '#E1F2EA', borderWidth: 1, borderColor: '#A9D5C5' }, roleTabText: { color: '#71827A', fontSize: 11, fontWeight: '700' }, roleTabTextActive: { color: '#176A54' }, modalInput: { height: 44, borderWidth: 1, borderColor: '#E3EBE7', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, color: '#294A41', fontSize: 12 }, cancelButton: { padding: 12, alignItems: 'center' }, cancelText: { color: '#6B807A', fontWeight: '700' },
   capacityRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 7, borderBottomWidth: 1, borderColor: '#EEF2EF' }, demoRoleCard: { backgroundColor: '#fff', borderRadius: 15, padding: 13, marginBottom: 14, borderWidth: 1, borderColor: '#E7EEEA' }, homeCard: { backgroundColor: '#fff', borderRadius: 20, padding: 18, borderWidth: 1, borderColor: '#E7EEEA', marginBottom: 14 }, homeCardIcon: { color: '#19765E', fontSize: 29 }, homeCardTitle: { color: '#25483D', fontSize: 17, fontWeight: '800', marginTop: 8 }, homeCardText: { color: '#71827A', fontSize: 12, lineHeight: 18, marginTop: 6 }, routineNote: { backgroundColor: '#EDF3F1', padding: 14, borderRadius: 14, marginBottom: 12 }, routineTitle: { color: '#25483D', fontSize: 12, fontWeight: '800' }, routineText: { color: '#71827A', fontSize: 10, lineHeight: 15, marginTop: 5 }, stepCount: { color: '#27836A', fontSize: 9, fontWeight: '800', letterSpacing: 1.1, marginTop: 5 }, stepTitle: { color: '#183D34', fontSize: 27, lineHeight: 32, fontWeight: '800', letterSpacing: -0.5, marginTop: 6 }, stepSubtitle: { color: '#6B807A', fontSize: 12, lineHeight: 18, marginTop: 7, marginBottom: 20 }, locationButton: { borderWidth: 1, borderColor: '#B5DDCD', borderRadius: 15, backgroundColor: '#EAF5F0', padding: 15, marginBottom: 20 }, locationButtonTitle: { color: '#176A54', fontSize: 13, fontWeight: '800' }, locationButtonSub: { color: '#6D877D', fontSize: 10, marginTop: 6 }, largeInput: { minHeight: 46, borderRadius: 11, borderWidth: 1, borderColor: '#E3EBE7', backgroundColor: '#fff', paddingHorizontal: 13, color: '#294A41', fontSize: 12 }, smallNote: { color: '#85958E', fontSize: 9, lineHeight: 14, marginTop: 6, marginBottom: 10 }, backButton: { paddingVertical: 13, alignItems: 'center' }, backText: { color: '#34735F', fontSize: 11, fontWeight: '800' }, toggleRow: { minHeight: 48, borderBottomWidth: 1, borderBottomColor: '#E8EFEB', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, toggleLabel: { color: '#49635A', fontSize: 11, fontWeight: '700' },
   loginPage: { flexGrow: 1, paddingHorizontal: 24, paddingTop: 35, paddingBottom: 36, justifyContent: 'center' }, loginBrand: { flexDirection: 'row', alignItems: 'center', gap: 11, marginBottom: 43 }, loginHero: { marginBottom: 25 }, loginTitle: { fontSize: 37, lineHeight: 41, color: '#183D34', fontWeight: '800', letterSpacing: -1, marginTop: 9, marginBottom: 7 }, roleList: { gap: 8 }, roleOption: { minHeight: 44, borderRadius: 12, borderWidth: 1, borderColor: '#E5ECE8', backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12 }, roleSelected: { borderColor: '#A9D5C5', backgroundColor: '#F0F8F4' }, roleRadio: { width: 17, height: 17, borderRadius: 9, borderWidth: 1.5, borderColor: '#B8C7C0', alignItems: 'center', justifyContent: 'center' }, roleRadioSelected: { borderColor: '#19765E' }, roleRadioDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#19765E' }, roleText: { color: '#6F8079', fontSize: 12, fontWeight: '600' }, roleTextSelected: { color: '#225A48', fontWeight: '800' }, loginInput: { height: 46, backgroundColor: '#fff', borderWidth: 1, borderColor: '#E5ECE8', borderRadius: 11, paddingHorizontal: 13, color: '#294A41', fontSize: 13 }, demoLogin: { textAlign: 'center', color: '#8A9992', fontSize: 10, lineHeight: 15, marginTop: 14, paddingHorizontal: 8 },

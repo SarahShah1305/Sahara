@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 
 type Mode = 'signin' | 'signup';
@@ -27,15 +27,19 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
   const [confirmPassword, setConfirmPassword] = useState('');
   const [demoRole, setDemoRole] = useState<AccountRole>('patient');
   const [busy, setBusy] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [feedbackIsError, setFeedbackIsError] = useState(false);
 
   async function submit() {
+    setFeedback('');
+    const invalid = (message: string) => { setFeedback(message); setFeedbackIsError(true); };
     const cleanEmail = email.trim().toLowerCase();
     if (!/^\S+@\S+\.\S+$/.test(cleanEmail)) {
-      Alert.alert('Check your email', 'Enter a valid email address.');
+      invalid('Enter a valid email address.');
       return;
     }
     if (password.length < 8) {
-      Alert.alert('Password too short', 'Use at least 8 characters.');
+      invalid('Password must be at least 8 characters long.');
       return;
     }
 
@@ -43,21 +47,21 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
       const cleanName = fullName.trim();
       const phoneE164 = normalizePakistaniMobile(mobile);
       if (cleanName.length < 2) {
-        Alert.alert('Add your name', 'Enter your full name to create the account.');
+        invalid('Enter your full name to create the account.');
         return;
       }
       if (!phoneE164) {
-        Alert.alert('Check your Pakistani mobile number', 'Enter a valid Pakistani mobile number, such as 3001234567. It will be saved as +923001234567.');
+        invalid('Enter a valid Pakistani mobile number, such as 3001234567. It will be saved with the +92 country code.');
         return;
       }
       if (password !== confirmPassword) {
-        Alert.alert('Passwords do not match', 'Re-enter the same password in both password fields.');
+        invalid('Passwords do not match. Enter the same password in both fields.');
         return;
       }
     }
 
     if (!isSupabaseConfigured || !supabase) {
-      Alert.alert('Account storage is not connected', 'Your entries were not saved. Connect Sahara to Supabase first; never save account passwords only on this phone.');
+      invalid('Account storage is not connected, so this account was not saved. Check the Supabase connection.');
       return;
     }
 
@@ -73,7 +77,11 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
         if (error) throw error;
         if (data.session) onRoleChosen(demoRole);
         if (!data.session) {
-          Alert.alert('Check your email', 'We sent a confirmation link. Confirm your email, then sign in. Your mobile number is saved in your profile; it has not been SMS-verified.');
+          setFeedback('Supabase did not start a sign-in session. If this email already has an account, choose Sign in. Otherwise, check that email sign-ups are enabled in Supabase and try again.');
+          setFeedbackIsError(false);
+        } else {
+          setFeedback('Your account was created.');
+          setFeedbackIsError(false);
         }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email: cleanEmail, password });
@@ -83,7 +91,15 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
         onRoleChosen(demoRole);
       }
     } catch (e) {
-      Alert.alert(mode === 'signup' ? 'Could not create account' : 'Could not sign in', e instanceof Error ? e.message : 'Please try again.');
+      const message = e instanceof Error ? e.message : 'Please try again.';
+      const normalized = message.toLowerCase();
+      const friendly = mode === 'signin' && (normalized.includes('invalid login credentials') || normalized.includes('user not found'))
+        ? 'We could not find an account with those details, or the password is incorrect. Check them, or choose “Create account” to sign up.'
+        : mode === 'signup' && (normalized.includes('already registered') || normalized.includes('already been registered'))
+          ? 'An account with this email already exists. Choose “Sign in” and use that account.'
+          : message;
+      setFeedback(friendly);
+      setFeedbackIsError(true);
     } finally {
       setBusy(false);
     }
@@ -114,6 +130,7 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
           {signingUp && <><Text style={s.label}>CONFIRM PASSWORD</Text><TextInput value={confirmPassword} onChangeText={setConfirmPassword} style={s.input} placeholder="Enter password again" secureTextEntry autoCapitalize="none" /></>}
 
           <TouchableOpacity disabled={busy} style={[s.button, busy && s.buttonBusy]} onPress={submit}><Text style={s.buttonText}>{busy ? 'Please wait…' : signingUp ? 'Create account' : 'Sign in'}  →</Text></TouchableOpacity>
+          {!!feedback && <View style={[s.feedbackBox, feedbackIsError && s.feedbackError]}><Text style={[s.feedbackText, feedbackIsError && s.feedbackErrorText]}>{feedback}</Text></View>}
           {!isSupabaseConfigured && <View style={s.setupNotice}><Text style={s.setupTitle}>Account saving isn’t connected yet</Text><Text style={s.setupText}>Validation works now. To save accounts securely, connect a Supabase project. No password is stored on this device.</Text></View>}
         </ScrollView>
       </KeyboardAvoidingView>
@@ -126,5 +143,5 @@ const s = StyleSheet.create({
   brandRow: { flexDirection: 'row', alignItems: 'center', gap: 11, marginBottom: 32 }, logo: { width: 43, height: 43, borderRadius: 15, backgroundColor: '#126B54', alignItems: 'center', justifyContent: 'center' }, logoMark: { color: '#fff', fontSize: 23, fontWeight: '800' }, brand: { color: '#123F35', fontWeight: '800', fontSize: 21 }, tagline: { color: '#79918A', fontSize: 8, letterSpacing: 1.3, fontWeight: '700', marginTop: 1 },
   eyebrow: { color: '#27836A', fontSize: 10, fontWeight: '800', letterSpacing: 1.1 }, title: { color: '#183D34', fontSize: 32, lineHeight: 36, fontWeight: '800', letterSpacing: -0.7, marginTop: 8 }, subtitle: { color: '#6B807A', fontSize: 12, lineHeight: 18, marginTop: 8, marginBottom: 20 }, switcher: { flexDirection: 'row', backgroundColor: '#E9EFEC', borderRadius: 12, padding: 4, marginBottom: 20 }, switch: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 9 }, switchActive: { backgroundColor: '#fff' }, switchText: { color: '#71827A', fontSize: 12, fontWeight: '700' }, switchTextActive: { color: '#176A54' },
   label: { color: '#82928D', fontSize: 9, fontWeight: '800', letterSpacing: 1, marginTop: 12, marginBottom: 7 }, input: { height: 46, borderRadius: 11, borderWidth: 1, borderColor: '#E3EBE7', backgroundColor: '#fff', paddingHorizontal: 13, color: '#294A41', fontSize: 13 }, phoneRow: { height: 46, flexDirection: 'row', gap: 8 }, countryCode: { borderRadius: 11, borderWidth: 1, borderColor: '#E3EBE7', backgroundColor: '#EEF5F1', paddingHorizontal: 12, alignItems: 'center', justifyContent: 'center' }, countryCodeText: { color: '#225A48', fontSize: 12, fontWeight: '800' }, phoneInput: { flex: 1, borderRadius: 11, borderWidth: 1, borderColor: '#E3EBE7', backgroundColor: '#fff', paddingHorizontal: 13, color: '#294A41', fontSize: 13 }, hint: { color: '#8A9992', fontSize: 9, marginTop: 5 },
-  button: { marginTop: 22, height: 48, borderRadius: 13, backgroundColor: '#126B54', alignItems: 'center', justifyContent: 'center' }, buttonBusy: { opacity: 0.6 }, buttonText: { color: '#fff', fontSize: 13, fontWeight: '800' }, setupNotice: { marginTop: 14, borderRadius: 12, padding: 12, backgroundColor: '#FFF4DF' }, setupTitle: { color: '#855B18', fontSize: 11, fontWeight: '800' }, setupText: { color: '#8A6C38', fontSize: 10, lineHeight: 15, marginTop: 4 }, roleChoices: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 }, roleChoice: { borderWidth: 1, borderColor: '#E3EBE7', borderRadius: 10, paddingHorizontal: 11, paddingVertical: 9, backgroundColor: '#fff' }, roleChoiceSelected: { backgroundColor: '#E5F4EE', borderColor: '#B5DDCD' }, roleChoiceText: { color: '#6A7E77', fontSize: 11, fontWeight: '600' }, roleChoiceTextSelected: { color: '#176A54', fontWeight: '800' }, footnote: { textAlign: 'center', color: '#82918A', fontSize: 10, lineHeight: 15, marginTop: 17 },
+  button: { marginTop: 22, height: 48, borderRadius: 13, backgroundColor: '#126B54', alignItems: 'center', justifyContent: 'center' }, buttonBusy: { opacity: 0.6 }, buttonText: { color: '#fff', fontSize: 13, fontWeight: '800' }, feedbackBox: { marginTop: 12, borderRadius: 12, padding: 12, backgroundColor: '#E7F4ED' }, feedbackText: { color: '#176A54', fontSize: 11, lineHeight: 16, fontWeight: '600' }, feedbackError: { backgroundColor: '#FFF0EC' }, feedbackErrorText: { color: '#A33A2B' }, setupNotice: { marginTop: 14, borderRadius: 12, padding: 12, backgroundColor: '#FFF4DF' }, setupTitle: { color: '#855B18', fontSize: 11, fontWeight: '800' }, setupText: { color: '#8A6C38', fontSize: 10, lineHeight: 15, marginTop: 4 }, roleChoices: { flexDirection: 'row', flexWrap: 'wrap', gap: 7 }, roleChoice: { borderWidth: 1, borderColor: '#E3EBE7', borderRadius: 10, paddingHorizontal: 11, paddingVertical: 9, backgroundColor: '#fff' }, roleChoiceSelected: { backgroundColor: '#E5F4EE', borderColor: '#B5DDCD' }, roleChoiceText: { color: '#6A7E77', fontSize: 11, fontWeight: '600' }, roleChoiceTextSelected: { color: '#176A54', fontWeight: '800' }, footnote: { textAlign: 'center', color: '#82918A', fontSize: 10, lineHeight: 15, marginTop: 17 },
 });
