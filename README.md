@@ -4,8 +4,6 @@
 
 Sahara brings patients, emergency coordinators, hospital teams, and administrators into one care-coordination app for Hyderabad, Sindh. It helps people discover nearby hospitals, compare reported services and capacity, schedule appointments, and send bed or emergency referral requests to the right hospital team—all from one place.
 
-> **Prototype notice:** Hospital listings and seeded capacity, prices, doctors, and activity may be synthetic or unverified. Sahara is not connected to hospital operating systems and must not be used to make real emergency or treatment decisions. Call local emergency services or the hospital directly when urgent care is needed.
-
 ## Project team
 
 - Syeda Sara Shah
@@ -110,3 +108,5 @@ npx eas-cli@latest build --platform android --profile preview
 - [Product requirements](PRD.md)
 - [Architecture](architecture.md)
 - [Supabase setup](mobile/supabase/SETUP.md)
+
+  > **Prototype notice:** Sahara is not connected to hospital operating systems and must not be used to make real emergency or treatment decisions.
