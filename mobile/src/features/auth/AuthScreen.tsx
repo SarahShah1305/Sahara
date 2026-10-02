@@ -97,7 +97,7 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
           <View style={s.brandRow}><View style={s.logo}><Text style={s.logoMark}>✚</Text></View><View><Text style={s.brand}>Sahara</Text><Text style={s.tagline}>RIGHT CARE. RIGHT NOW.</Text></View></View>
           <Text style={s.eyebrow}>HYDERABAD • HEALTHCARE SUPPORT</Text>
           <Text style={s.title}>{signingUp ? 'Create your\nSahara account.' : 'Choose a role,\nthen sign in.'}</Text>
-          <Text style={s.subtitle}>{signingUp ? 'Save your contact details and choose the dashboard to open.' : 'Select any prototype role below. Role access is open for this demo.'}</Text>
+          <Text style={s.subtitle}>{signingUp ? 'Save your contact details and choose the dashboard to open.' : 'Choose your role, then sign in to open its dashboard.'}</Text>
 
           <View style={s.switcher}>
             <TouchableOpacity onPress={() => setMode('signin')} style={[s.switch, !signingUp && s.switchActive]}><Text style={[s.switchText, !signingUp && s.switchTextActive]}>Sign in</Text></TouchableOpacity>
@@ -107,7 +107,7 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
           {signingUp && <><Text style={s.label}>FULL NAME</Text><TextInput value={fullName} onChangeText={setFullName} style={s.input} placeholder="Your name" autoCapitalize="words" returnKeyType="next" />
             <Text style={s.label}>PAKISTANI MOBILE NUMBER</Text><View style={s.phoneRow}><View style={s.countryCode}><Text style={s.countryCodeText}>🇵🇰  +92</Text></View><TextInput value={mobile} onChangeText={setMobile} style={s.phoneInput} placeholder="300 1234567" keyboardType="phone-pad" maxLength={16} /></View><Text style={s.hint}>Enter 10 digits after +92. We’ll normalize numbers beginning with 03 automatically.</Text></>}
 
-          <><Text style={s.label}>CHOOSE YOUR ROLE</Text><View style={s.roleChoices}>{accountRoles.map(role=><TouchableOpacity key={role.value} onPress={()=>setDemoRole(role.value)} style={[s.roleChoice,demoRole===role.value&&s.roleChoiceSelected]}><Text style={[s.roleChoiceText,demoRole===role.value&&s.roleChoiceTextSelected]}>{role.label}</Text></TouchableOpacity>)}</View><Text style={s.hint}>Prototype role selection is open. No staff verification is required in this demo.</Text></>
+          <><Text style={s.label}>CHOOSE YOUR ROLE</Text><View style={s.roleChoices}>{accountRoles.map(role=><TouchableOpacity key={role.value} onPress={()=>setDemoRole(role.value)} style={[s.roleChoice,demoRole===role.value&&s.roleChoiceSelected]}><Text style={[s.roleChoiceText,demoRole===role.value&&s.roleChoiceTextSelected]}>{role.label}</Text></TouchableOpacity>)}</View></>
 
           <Text style={s.label}>EMAIL ADDRESS</Text><TextInput value={email} onChangeText={setEmail} style={s.input} placeholder="you@example.com" autoCapitalize="none" keyboardType="email-address" autoComplete="email" />
           <Text style={s.label}>PASSWORD {signingUp ? '(8 characters minimum)' : ''}</Text><TextInput value={password} onChangeText={setPassword} style={s.input} placeholder="Enter password" secureTextEntry autoCapitalize="none" />
@@ -115,7 +115,6 @@ export default function AuthScreen({ onRoleChosen }: { onRoleChosen: (role: Acco
 
           <TouchableOpacity disabled={busy} style={[s.button, busy && s.buttonBusy]} onPress={submit}><Text style={s.buttonText}>{busy ? 'Please wait…' : signingUp ? 'Create account' : 'Sign in'}  →</Text></TouchableOpacity>
           {!isSupabaseConfigured && <View style={s.setupNotice}><Text style={s.setupTitle}>Account saving isn’t connected yet</Text><Text style={s.setupText}>Validation works now. To save accounts securely, connect a Supabase project. No password is stored on this device.</Text></View>}
-          <Text style={s.footnote}>Prototype only: choose any role to open its dashboard. Hospital and ambulance records are sample data.</Text>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
